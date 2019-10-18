@@ -8,6 +8,10 @@ Cell-ID v0.99
 
 Welcome to the official Github repository of the Cell-ID software.
 
+Cell-ID has been recently presented at the America Society of Human Genetics annual meeting (ASHG 2019) as a platform talk with the following abstact: https://eventpilotadmin.com/web/page.php?page=Session&project=ASHG19&id=204004
+
+Cell-ID enables the identification of rare individual cells and their reproducible gene signatures across independent single-cell RNA-seq datasets.
+
 Cell-ID software will be officially released in this repository as an open-source R package in the next weeks. 
 
 If you would like to be informed about the release please send an email to antonio.rausell@institutimagine.org with subject: “Cell-ID release announcement”. 
