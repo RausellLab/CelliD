@@ -3,6 +3,9 @@ Gene signature extraction and cell-identity recognition at individual cell level
 
 Cell-ID v0.99
 
+
+----------------------------------------
+
 Welcome to the official Github repository of the Cell-ID software.
 
 Cell-ID software will be officially released in this repository as an open-source R package in the next weeks. 
@@ -13,7 +16,7 @@ You may also follow up in Twitter for regular updates: https://twitter.com/Anton
 
 ----------------------------------------
 
-#Abstract
+# Abstract
 
 Akira Cortal 1, Antonio Rausell 1,2
 
