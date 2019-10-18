@@ -1,26 +1,26 @@
 # CelliD
 Gene signature extraction and cell-identity recognition at individual cell level from single-cell RNA-seq. 
 
-Cell-ID v0.99
+**Cell-ID v0.99**
 
 
 ----------------------------------------
 
-Welcome to the official Github repository of the Cell-ID software.
+Welcome to the official Github repository of the **Cell-ID** software.
 
-**Cell-ID enables the identification of rare individual cells and their reproducible gene signatures across independent single-cell RNA-seq datasets.**
-
-Cell-ID has been recently presented at the America Society of Human Genetics annual meeting (ASHG 2019) as a platform talk with the following abstact: https://eventpilotadmin.com/web/page.php?page=Session&project=ASHG19&id=204004
-
-Cell-ID software will be officially released in this repository as an open-source R package in the next weeks. 
+**Cell-ID** software will be officially released in this repository as an open-source R package in the next weeks. 
 
 If you would like to be informed about the release please send an email to antonio.rausell@institutimagine.org with subject: “Cell-ID release announcement”. 
 
-You may also follow up in Twitter for regular updates: https://twitter.com/AntonioRausell
+You may also follow us in Twitter for regular updates: https://twitter.com/AntonioRausell
+
+**Cell-ID** has been recently presented at the America Society of Human Genetics annual meeting (ASHG 2019) as a platform talk with the following abstact: https://eventpilotadmin.com/web/page.php?page=Session&project=ASHG19&id=204004
 
 ----------------------------------------
 
 # Abstract
+
+**Cell-ID enables the identification of rare individual cells and their reproducible gene signatures across independent single-cell RNA-seq datasets.**
 
 Akira Cortal 1, Antonio Rausell 1,2
 
@@ -35,6 +35,6 @@ Here we present Cell-ID, a robust statistical method that performs gene signatur
 
 ## Contact
 Please address comments and questions about Cell-ID to:
-* **Akira Cortal** - *Package Maintainer* - [akira.cortal@institutimagine.org](akira.cortal@institutimagine.org)
-* **Antonio Rasuell** - *Supervisor* - [antonio.rausell@institutimagine.org](antonio.rausell@institutimagine.org)
+* **Akira Cortal** - [akira.cortal@institutimagine.org](akira.cortal@institutimagine.org)
+* **Antonio Rausell** - [antonio.rausell@institutimagine.org](antonio.rausell@institutimagine.org)
 
