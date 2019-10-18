@@ -34,7 +34,7 @@ Here we present Cell-ID, a robust statistical method that performs gene signatur
 
 
 ## Contact
-Please address comments and questions about Cell-ID to akira.cortal@institutimagine.org and antonio.rausell@institutimagine.org
+Please address comments and questions about Cell-ID to:
 * **Akira Cortal** - *Package Maintainer* - [akira.cortal@institutimagine.org](akira.cortal@institutimagine.org)
 * **Antonio Rasuell** - *Supervisor* - [antonio.rausell@institutimagine.org](antonio.rausell@institutimagine.org)
 
