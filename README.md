@@ -25,7 +25,7 @@ setRepositories(ind = c(1,2,3))
 
 To install Cell-ID then just type:
 ```r
-devtools::install_github("cbl-imagine/CellID")
+devtools::install_github("RausellLab/CelliD")
 ```
 ## Known installation issues
 

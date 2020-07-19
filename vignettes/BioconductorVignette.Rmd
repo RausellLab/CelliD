@@ -31,7 +31,7 @@ if(!require("tidyverse")) install.packages("tidyverse")
 if(!require("ggpubr")) install.packages("ggpubr")
 if(!require("devtools")) install.packages("devtools")
 setRepositories(ind = c(1, 2, 3, 4))
-devtools::install_github("cbl-imagine/CellID")
+devtools::install_github("RausellLab/CelliD")
 
 ```
 ## Common installation issues
