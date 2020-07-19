@@ -22,14 +22,14 @@ knitr::opts_chunk$set(
   warning=FALSE
 )
 ```
-# Contact
+# Introduction
+
+## Contact
 akira.cortal@institutimagine.org
 antonio.rausell@institutimagine.org
 
-# Cell-ID R package
+## Cell-ID R package
 This vignette illustrates the use of the Cell-ID R package v1.0 available at https://github.com/RausellLab/CelliD
-
-# Introduction
 
 Cell-ID is a clustering-free multivariate statistical method for the robust extraction of per-cell gene signatures from single-cell RNA-seq. Cell-ID allows unbiased cell identity recognition across different donors, tissues-of-origin, model organisms and single-cell omics protocols. We present here the main functionalities of the Cell-ID R package through several use cases. 
 
@@ -46,18 +46,20 @@ setRepositories(ind = c(1, 2, 3, 4))
 devtools::install_github("cbl-imagine/CellID")
 
 ```
-# Common installation issues
+## Common installation issues
 
 macOS users might experience installation issues related to Gfortran library. To solve this, download and install the appropriate gfortran dmg file from https://github.com/fxcoudert/gfortran-for-macOS
 
-# Load libraries
+# Data and libraries
+
+## Load libraries
 ```{r library load, message=FALSE}
 library(CellID)
 library(tidyverse) # general purpose library for data handling
 library(ggpubr) #library for plotting
 ```
 
-# Load Data
+## Load Data
 
 To illustrate Cell-ID usage we will use throughout this vignette two publickly available pancreas single-cell RNA-seq data sets provided in [Baron et al. 2016](https://doi.org/10.1016/j.cels.2016.08.011) and [Segerstolpe et al. 2016](https://doi.org/10.1016/j.cmet.2016.08.020). 
 We provide here for convinience the R objects with the raw counts gene expression matrices and associated metadata
