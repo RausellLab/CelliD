@@ -37,12 +37,13 @@ Cell-ID use as input single cell data in the form of specific S4objects. Currelt
 
 ## Vignettes
 
-A vignette illustrating Cell-ID step-by-step procedures is provided [here](https://cbl-imagine.github.io/CellID/Vignette/vign.html). Applications include MCA dimensionality reduction, per-cell gene signatures extraction, automatic cell type prediction using marker gene lists, label-transferring across datasets and functional enrichment analysis.
+A vignette illustrating Cell-ID step-by-step procedures is provided [here](https://rauselllab.github.io/CelliD//vignettes/vign.html). Applications include MCA dimensionality reduction, per-cell gene signatures extraction, automatic cell type prediction using marker gene lists, label-transferring across datasets and functional enrichment analysis.
 
 ## Authors
 
 * **Akira Cortal** - [akira.cortal@institutimagine.org](akira.cortal@institutimagine.org)
 * **Antonio Rausell** -  [antonio.rausell@institutimagine.org](antonio.rausell@institutimagine.org)
+
 
 ## License
 
