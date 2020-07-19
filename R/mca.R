@@ -87,7 +87,7 @@ RunMCA.SingleCellExperiment <-
             RunMCA(
                 X = data_matrix,
                 nmcs = nmcs,
-                features = NULL,
+                features = features,
                 reduction.name = reduction.name
             )
         geneEmb <- MCA$featuresCoordinates
