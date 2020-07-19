@@ -23,7 +23,7 @@ CellID is used with single cell specific S4objects. Curreltly supported are Sing
 
 # Vignettes
 
-You can find a vignette for the basic functionalities and usage of the package [here](https://github.com/RausellLab/CelliD/blob/master/vignettes/vign.html)
+You can find a vignette for the basic functionalities and usage of the package [here](https://RausellLab/CelliD/vignettes/vign.html)
 
 ## Authors
 
