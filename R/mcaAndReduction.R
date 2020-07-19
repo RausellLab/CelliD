@@ -68,8 +68,8 @@ RunMCDMAP.SingleCellExperiment <-
             destiny::DiffusionMap(data = GeneCellCoordinates, ...)
         Emb <- MCDMAP@eigenvectors
         rownames(Emb) <- rownames(GeneCellCoordinates)
-        geneEmb <- Emb[!rownames(Emb) %in% rownames(Embeddings(X, reduction)),]
-        cellEmb <- Emb[rownames(Emb) %in% rownames(Embeddings(X, reduction)), ]
+        geneEmb <- Emb[!rownames(Emb) %in% rownames(reducedDim(X, reduction)),]
+        cellEmb <- Emb[rownames(Emb) %in% rownames(reducedDim(X, reduction)), ]
         X <-
             setDimMCSlot(
                 X = X,
@@ -160,8 +160,8 @@ RunMCTSNE.SingleCellExperiment <-
         Emb <- MCTSNE$Y
         colnames(Emb) <- paste0(reduction.name, seq(ncol(Emb)))
         rownames(Emb) <- rownames(GeneCellCoordinates)
-        geneEmb <- Emb[seq(length(features)), ]
-        cellEmb <- Emb[-seq(length(features)), ]
+        geneEmb <- Emb[!rownames(Emb) %in% rownames(reducedDim(X, reduction)), ]
+        cellEmb <- Emb[rownames(Emb) %in% rownames(reducedDim(X, reduction)), ]
         X <- setDimMCSlot(
             X = X,
             cellEmb = cellEmb,
@@ -255,8 +255,8 @@ RunMCUMAP.SingleCellExperiment <-
         message("\nreturning Single Cell Experiment object\n")
         Emb <- MCUMAP$layout
         rownames(Emb) <- rownames(GeneCellCoordinates)
-        cellEmb <- Emb[, ]
-        geneEmb <- Emb[seq(length(features)), ]
+        cellEmb <- Emb[rownames(Emb) %in% rownames(reducedDim(X, reduction)), ]
+        geneEmb <- Emb[!rownames(Emb) %in% rownames(reducedDim(X, reduction)), ]
         X <-
             setDimMCSlot(
                 X = X,
