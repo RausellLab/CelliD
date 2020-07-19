@@ -1,0 +1,8 @@
+bibentry(bibtype = "Manual",
+         title = "{CellID}: Unbiased Extraction of Single Cell Identity using Multiple Correspondence Analysis",
+         author = c(person("Akira", "Cortal"),
+                    person("Antonio", "Rausell")
+                    ),
+         year = "2019",
+         note = sprintf("R package version %s", "0.99"),
+         url = "https://github.com/cbl-imagine/CellID")

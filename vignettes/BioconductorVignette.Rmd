@@ -1,0 +1,334 @@
+---
+title: "Cell-ID Vignette"
+author:
+- name: Akira Cortal
+  affiliation: Paris University, Imagine Institute, 75015 Paris, France, EU
+- name: Antonio Rausell
+  affiliation: Paris University, Imagine Institute, 75015 Paris, France, EU
+  email: akira.cortal@institutimagine.org
+package: CellID
+output:
+  BiocStyle::html_document
+abstract: |
+  Cell-ID is a clustering-free multivariate statistical method for the robust extraction of per-cell gene signatures from single-cell RNA-seq. Cell-ID allows unbiased cell identity recognition across different donors, tissues-of-origin, model organisms and single-cell omics protocols. We present here the main functionalities of the Cell-ID R package through several use cases. This vignette illustrates the use of the Cell-ID R package v1.0 available at https://github.com/RausellLab/CelliD.
+vignette: |
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+# Contact
+akira.cortal@institutimagine.org
+antonio.rausell@institutimagine.org
+
+# Installation
+
+Cell-ID is based on R version >= 3.6. It contains dependencies with several CRAN and Biocondutor packages as described in the [Description file](https://github.com/cbl-imagine/CellID/blob/master/DESCRIPTION)
+
+To install Cell-ID, set the repositories option to enable downloading Bioconductor dependencies:
+```{r Installation, eval = F}
+if(!require("tidyverse")) install.packages("tidyverse")
+if(!require("ggpubr")) install.packages("ggpubr")
+if(!require("devtools")) install.packages("devtools")
+setRepositories(ind = c(1, 2, 3, 4))
+devtools::install_github("cbl-imagine/CellID")
+
+```
+## Common installation issues
+
+macOS users might experience installation issues related to Gfortran library. To solve this, download and install the appropriate gfortran dmg file from https://github.com/fxcoudert/gfortran-for-macOS
+
+# Data and libraries
+
+## Load libraries
+```{r library load, message=FALSE}
+library(CellID)
+library(tidyverse) # general purpose library for data handling
+library(ggpubr) #library for plotting
+```
+
+## Load Data
+
+To illustrate Cell-ID usage we will use throughout this vignette two publickly available pancreas single-cell RNA-seq data sets provided in [Baron et al. 2016](https://doi.org/10.1016/j.cels.2016.08.011) and [Segerstolpe et al. 2016](https://doi.org/10.1016/j.cmet.2016.08.020). 
+We provide here for convinience the R objects with the raw counts gene expression matrices and associated metadata
+```{r download data}
+#read data
+BaronMatrix   <- readRDS(url("https://storage.googleapis.com/cellid-cbl/BaronMatrix.rds"))
+BaronMetaData <- readRDS(url("https://storage.googleapis.com/cellid-cbl/BaronMetaData.rds"))
+SegerMatrix   <- readRDS(url("https://storage.googleapis.com/cellid-cbl/SegerstolpeMatrix.rds"))
+SegerMetaData <- readRDS(url("https://storage.googleapis.com/cellid-cbl/SegerstolpeMetaData2.rds"))
+```
+
+# Data input and preprocessing steps
+
+## Restricting the analysis to protein-coding genes
+
+While Cell-ID can handle all types of genes, we recommend restricting the analysis to protein-coding genes. Cell-ID package provides two gene lists (HgProteinCodingGenes and MgProteinCodingGenes) containing a background set of 19308 and 21914 protein-coding genes from human and mouse, respectively, obtained from BioMart Ensembl release 100, version April 2020 (GrCH38.p13 for human, and GRCm38.p6 for mouse). Gene identifiers here correspond to official gene symbols.
+
+```{r preprocessing1, message=FALSE}
+# Restricting to protein-coding genes
+BaronMatrixProt <- BaronMatrix[rownames(BaronMatrix) %in% HgProteinCodingGenes,]
+SegerMatrixProt <- SegerMatrix[rownames(SegerMatrix) %in% HgProteinCodingGenes,]
+```
+
+## Data input formats
+
+Cell-ID use as input single cell data in the form of specific S4objects. Curreltly supported files are SingleCellExperiment from Bioconductor and Seurat Version 3 from CRAN. For downstream analyses, gene identifiers corresponding to official gene symbols are used.
+
+## Creating a Seurat object, and processing and normalization of the gene expression matrix
+
+Library size normalization is carried out by rescaling counts to a common library size of 10000. Log transformation is performed after adding a pseudo-count of 1.  Genes expressing at least one count in less than 5 cells are removed. These steps mimmic the standard Seurat workflow desribed [here](https://satijalab.org/seurat/v3.1/pbmc3k_tutorial.html).
+
+```{r preprocessing2, message=FALSE}
+# Create Seurat object  and remove remove low detection genes
+Baron <- CreateSeuratObject(counts = BaronMatrixProt, project = "Baron", min.cells = 5, meta.data = BaronMetaData)
+Seger <- CreateSeuratObject(counts = SegerMatrixProt, project = "Segerstolpe", min.cells = 5, meta.data = SegerMetaData)
+
+# Library-size normalization, log-transformation, and centering and scaling of gene expression values
+Baron <- NormalizeData(Baron)
+Baron <- ScaleData(Baron, features = rownames(Baron))
+```
+
+While this vignette only illustrates the use of Cell-ID on single-cell RNA-seq data, we note that the package can handle other types of gene matrices, e.g sci-ATAC gene activity score matrices.
+
+# Cell-ID dimensionality reduction through MCA
+
+CellID is based on Multiple Correspondence Analysis (MCA), a multivariate method that allows the simulataneous representation of both cells and genes in the same low dimensional vector space. In such space, eucledian distances between genes and cells are computed, and per-cell gene rankings are obtained. The top 'n' closest genes to a given cell will be defined as its gene signature. Per-cell gene signatures will be obtained in a later section of this vignette.
+
+To perform MCA dimensionality reduction, the command `RunMCA` is used:
+```{r MCA1}
+Baron <- RunMCA(Baron)
+```
+
+The `DimPlotMC` command allows to visualize both cells and selected gene lists in MCA low dimensional space.
+```{r MCA2}
+DimPlotMC(Baron, reduction = "mca", group.by = "cell.type", features = c("CTRL", "INS", "MYZAP", "CDH11"), as.text = T) + ggtitle("MCA with some key gene markers")
+```
+In the previous plot we colored cells according to the pre-established cell type annotations available as metadata ("cell.type") and as provided in Baron et al. 2016. No clustering step was performed here. In the common scenario where such annotations were not available, the `DimPlotMC` function would represent cells as red colored dots, and genes as black crosses. To represent all genes in the previous plot, just remove the "features" parameter from the previous command, so that the `DimPlotMC` function takes the default value.
+
+## Alternative state-of-the-art dimensionality reduction techniques
+
+For the sake of comparisson, state-of-the-art dimensionality reduction techniques such as PCA, UMAP and tSNE can be obtained as follows:
+```{r Std Seurat}
+
+Baron <- RunPCA(Baron, features = rownames(Baron))
+Baron <- RunUMAP(Baron, dims = 1:30)
+Baron <- RunTSNE(Baron, dims = 1:30)
+PCA  <- DimPlot(Baron, reduction = "pca", group.by = "cell.type")  + ggtitle("PCA") + theme(legend.text = element_text(size =10), aspect.ratio = 1)
+tSNE <- DimPlot(Baron, reduction = "tsne", group.by = "cell.type")+ ggtitle("tSNE") + theme(legend.text = element_text(size =10), aspect.ratio = 1)
+UMAP <- DimPlot(Baron, reduction = "umap", group.by = "cell.type") + ggtitle("UMAP") + theme(legend.text = element_text(size =10), aspect.ratio = 1)
+MCA <- DimPlot(Baron, reduction = "mca", group.by = "cell.type")  + ggtitle("MCA") + theme(legend.text = element_text(size =10), aspect.ratio = 1)
+ggarrange(PCA, MCA, common.legend = T, legend = "top")
+ggarrange(tSNE, UMAP, common.legend = T, legend = "top")
+```
+
+
+# Cell-ID automatic cell type prediction using pre-established marker lists
+
+At this stage, Cell-ID can perform an automatic cell type prediction for each cell in the dataset. For that purpose, prototypical marker lists associated to well-characterized cell types are used as input, as obtained from third-party sources. Here we will use the Panglao [database](https://panglaodb.se/) of curated gene signatures to predict the cell type of each individual cell in the Baron data. 
+
+We will illustrate the procedure with two collections of cell-type gene signatures: first restricting the assessment to known pancreatic cell types, and second, a more challenging and unbiased scenario where all cell types in the database will be evaluated. Alternative gene signature databases and/or custom made marker lists can be used by adapting their input format as described below. The quality of the predictions is obviously highly dependent on the quality of the cell type signatures. 
+
+## Obtaining pancreatic cell-type gene signatures 
+```{r pancreas_gs}
+# download all cell-type gene signatures from panglaoDB
+panglao <- read_tsv("https://panglaodb.se/markers/PanglaoDB_markers_27_Mar_2020.tsv.gz")
+
+# restricting the analysis to pancreas specific gene signatues
+panglao_pancreas <- panglao %>% filter(organ == "Pancreas")
+
+# restricting to human specific genes
+panglao_pancreas <- panglao_pancreas %>%  filter(str_detect(species,"Hs"))
+
+# converting dataframes into a list of vectors, which is the format needed as input for CellID
+panglao_pancreas <- panglao_pancreas %>%  
+  group_by(`cell type`) %>%  
+  summarise(geneset = list(`official gene symbol`))
+pancreas_gs <- setNames(panglao_pancreas$geneset, panglao_pancreas$`cell type`)
+```
+
+## Obtaining gene signatures for all cell types in the Panglao database
+```{r all gs}
+#filter to get human specific genes
+panglao_all <- panglao %>%  filter(str_detect(species,"Hs"))
+
+# convert dataframes to a list of named vectors which is the format for CellID input
+panglao_all <- panglao_all %>%  
+  group_by(`cell type`) %>%  
+  summarise(geneset = list(`official gene symbol`))
+all_gs <- setNames(panglao_all$geneset, panglao_all$`cell type`)
+
+#remove very short signatures
+all_gs <- all_gs[sapply(all_gs, length) >= 10]
+```
+
+
+## Assessing per-cell gene signature enrichments against pre-established marker lists
+
+A per-cell assessment is performed, where the enrichment of each cell's gene signature against each cell-type marker lists is evaluated through hypergeometric tests. No intermediate clustering steps are used here. By default, the size n of the cell's gene signature is set to n.features = 200
+
+By default, only reference gene sets of size ≥10 are considered. In addition, hypergeometric test p-values are corrected by multiple testing for the number of gene sets evaluated. A cell is considered as enriched in those gene sets for which the hypergeometric test p-value is <1e-02 (-log10 corrected p-value >2), after Benjamini Hochberg multiple testing correction. Default settings can be modified within the `RunCellHGT` function.
+
+The `RunCellHGT` function will provide the -log10 corrected p-value for each cell and each signature evaluated, so a multi-class evaluation is enabled.  When a disjointed classification is required, a cell will be assigned to the gene set with the lowest significant corrected p-value. If no significant hits are found, a cell will remain unassigned. 
+
+```{r predictions using pancreas preestablished geneset}
+
+# Performing per-cell hypergeometric tests against the gene signature collection
+HGT_pancreas_gs <- RunCellHGT(Baron, pathways = pancreas_gs, dims = 1:50, n.features = 200)
+
+# For each cell, assess the signature with the lowest corrected p-value (max -log10 corrected p-value)
+pancreas_gs_prediction <- rownames(HGT_pancreas_gs)[apply(HGT_pancreas_gs, 2, which.max)]
+
+# For each cell, evaluate if the lowest p-value is significant
+pancreas_gs_prediction_signif <- ifelse(apply(HGT_pancreas_gs, 2, max)>2, yes = pancreas_gs_prediction, "unassigned")
+
+# Save cell type predictions as metadata within the Seurat object
+Baron$pancreas_gs_prediction <- pancreas_gs_prediction_signif
+```
+
+The previous cell type predictions can be visualized on any low-dimensionality representation of choice, as illustrated here using tSNE plots
+
+```{r plottting cell type predictions based on pancreas-specific gene signatures}
+# Comparing the original labels with Cell-ID cell-type predictions based on pancreas-specific gene signatures
+color <- c("#F8766D", "#E18A00", "#BE9C00", "#8CAB00", "#24B700", "#00BE70", "#00C1AB", "#00BBDA", "#00ACFC", "#8B93FF", "#D575FE", "#F962DD", "#FF65AC", "grey")
+ggcolor <- setNames(color,c(sort(unique(Baron$cell.type)), "unassigned"))
+OriginalPlot <- DimPlot(Baron, reduction = "tsne", group.by = "cell.type") + 
+  scale_color_manual(values = ggcolor) + 
+  theme(legend.text = element_text(size =10), aspect.ratio = 1)
+Predplot1 <- DimPlot(Baron, reduction = "tsne", group.by = "pancreas_gs_prediction") + 
+  scale_color_manual(values = ggcolor) + 
+  theme(legend.text = element_text(size =10), aspect.ratio = 1)
+ggarrange(OriginalPlot, Predplot1, legend = "top",common.legend = T)
+```
+
+From an unbiased perspective, Cell-ID cell type prediction can be performed using as input a comprehensive set of cell types that are not necessarily restricted to the organ or tissue under study. To illustrate this scenario all cell types in the Panglao database can be evaluated at once. 
+
+```{r predictions using all preestablished geneset}
+HGT_all_gs <- RunCellHGT(Baron, pathways = all_gs, dims = 1:50)
+all_gs_prediction <- rownames(HGT_all_gs)[apply(HGT_all_gs, 2, which.max)]
+all_gs_prediction_signif <- ifelse(apply(HGT_all_gs, 2, max)>2, yes = all_gs_prediction, "unassigned")
+
+# For the sake of visualization, we group under the label "other" diverse cell types for which significant enrichments were found:
+Baron$all_gs_prediction <- ifelse(all_gs_prediction_signif %in% c(names(pancreas_gs), "Schwann cells", "Endothelial cells", "Macrophages", "Mast cells", "T cells","Fibroblasts", "unassigned"), all_gs_prediction_signif,"other")
+
+color <- c("#F8766D", "#E18A00", "#BE9C00", "#8CAB00", "#24B700", "#00BE70", "#00C1AB", "#00BBDA", "#00ACFC", "#8B93FF", "#D575FE", "#F962DD", "#FF65AC", "#D575FE", "#F962DD", "grey", "black")
+ggcolor <- setNames(color,c(sort(unique(Baron$cell.type)), "Fibroblasts", "Schwann cells", "unassigned", "other"))
+Baron$pancreas_gs_prediction <- factor(Baron$pancreas_gs_prediction,c(sort(unique(Baron$cell.type)), "Fibroblasts", "Schwann cells", "unassigned", "other"))
+PredPlot2 <- DimPlot(Baron, group.by = "all_gs_prediction", reduction = "tsne") + 
+  scale_color_manual(values = ggcolor, drop =FALSE) + 
+  theme(legend.text = element_text(size =10), aspect.ratio = 1)
+ggarrange(OriginalPlot, PredPlot2, legend = "top",common.legend = T)
+```
+
+# Cell-ID cell-to-cell matching and label transferring across datasets
+
+Cell-ID performs cell-to-cell matching across independent single-cell datasets. Datasets can originate from the same or from a different tissue / organ. Cell matching can be performed either within (e.g. human-to-human) or across species (e.g. mouse-to-human). Cell-ID cell matching across datasets is performed by a per-cell assessment in the query dataset evaluating the replication of gene signatures extracted from the reference dataset. Gene signatures from the reference dataset can be automatically derived either from individual cells (Cell-ID(c)), or from previously-established groups of cells (Cell-ID(g)).
+
+##  Cell-ID(c) and  Cell-ID(g): per-cell and per-group gene signature extraction from a reference dataset
+
+In  Cell-ID(c), the gene signatures extracted for each cell n in a dataset D can be assessed through their enrichment against the gene signatures extracted for each cell n’ in a reference dataset D’. Alternatively, Cell-ID(g) takes advantage of a grouping of cells in D, where per-group gene signatures are extracted and evaluated against the gene signatures for each cell n in the query dataset D. We note that the groupings used in Cell-ID(g) should be provided as input and tipically originate from a manual annotation process.
+
+Analogous to the previous section, Cell-ID(c) and Cell-ID(g) evaluate such enrichments through hypergeometric tests, and p-values are corrected by multiple testing for the number of cells or the number of groups against which they are evaluated. Best hits can be used for cell-to-cell matching (Cell-ID(c)) or group-to-cell matching (Cell-ID(g) and subsequent label transferring across datasets. If no significant hits are found, a cell will remain unassigned.
+
+Here we illustrate Cell-ID(c) and Cell-ID(g) using the Baron dataset as a reference set from which both cell and group signatures are extracted. The Segerstolpe dataset is used as the query set on which the cell-type labels previously annotated in the Baron dataset are transferred.
+
+```{r geneset extraction}
+# Extracting per-cell gene signatures from the Baron dataset with Cell-ID(c)
+Baron_cell_gs <- GetCellGeneSet(Baron, dims = 1:50, n.features = 200)
+
+# Extracting per-group gene signatures from the Baron dataset with Cell-ID(g)
+Baron_group_gs <- GetGroupGeneSet(Baron, dims = 1:50, n.features = 200, group.by = "cell.type")
+```
+
+## Preprocessing and MCA assessment of the Segerstolpe dataset used as the query set
+
+```{r segerstolpe preprocessing, message=FALSE}
+# Normalization, basic preprocessing and MCA dimensionality reduction assessment
+Seger <- NormalizeData(Seger)
+Seger <- FindVariableFeatures(Seger)
+Seger <- ScaleData(Seger)
+Seger <- RunMCA(Seger, nmcs = 50)
+Seger <- RunPCA(Seger)
+Seger <- RunUMAP(Seger, dims = 1:30)
+Seger <- RunTSNE(Seger, dims = 1:30)
+tSNE <- DimPlot(Seger, reduction = "tsne", group.by = "cell.type", pt.size = 0.1) + ggtitle("tSNE") + theme(aspect.ratio = 1)
+UMAP <- DimPlot(Seger, reduction = "umap", group.by = "cell.type", pt.size = 0.1) + ggtitle("UMAP") + theme(aspect.ratio = 1)
+ggarrange(tSNE, UMAP, common.legend = T, legend = "top")
+```
+
+## Cell-ID(c): cell-to-cell matching and label transferring across datasets
+
+```{r predictions using extracted geneset cell}
+HGT_baron_cell_gs <- RunCellHGT(Seger, pathways = Baron_cell_gs, dims = 1:50)
+baron_cell_gs_match <- rownames(HGT_baron_cell_gs)[apply(HGT_baron_cell_gs, 2, which.max)]
+baron_cell_gs_prediction <- Baron$cell.type[baron_cell_gs_match]
+baron_cell_gs_prediction_signif <- ifelse(apply(HGT_baron_cell_gs, 2, max)>2, yes = baron_cell_gs_prediction, "unassigned")
+Seger$baron_cell_gs_prediction <- baron_cell_gs_prediction_signif
+
+color <- c("#F8766D", "#E18A00", "#BE9C00", "#8CAB00", "#24B700", "#00BE70", "#00C1AB", "#00BBDA", "#00ACFC", "#8B93FF", "#D575FE", "#F962DD", "#FF65AC", "grey")
+ggcolor <- setNames(color,c(sort(unique(Baron$cell.type)), "unassigned"))
+
+ggPredictionsCellMatch <- DimPlot(Seger, group.by = "baron_cell_gs_prediction", pt.size = 0.2, reduction = "tsne") + ggtitle("Predicitons") + scale_color_manual(values = ggcolor, drop =FALSE) + 
+  theme(legend.text = element_text(size =10), aspect.ratio = 1)
+ggOriginal <- DimPlot(Seger, group.by = "cell.type", pt.size = 0.2, reduction = "tsne") + ggtitle("Original") + scale_color_manual(values = ggcolor) + 
+  theme(legend.text = element_text(size =10), aspect.ratio = 1)
+ggarrange(ggOriginal, ggPredictionsCellMatch, legend = "top", common.legend = T)
+```
+
+## Cell-ID(g): group-to-cell matching and label transferring across datasets
+
+```{r predictions using extracted geneset group}
+HGT_baron_group_gs <- RunCellHGT(Seger, pathways = Baron_group_gs, dims = 1:50)
+baron_group_gs_prediction <- rownames(HGT_baron_group_gs)[apply(HGT_baron_group_gs, 2, which.max)]
+baron_group_gs_prediction_signif <- ifelse(apply(HGT_baron_group_gs, 2, max)>2, yes = baron_group_gs_prediction, "unassigned")
+Seger$baron_group_gs_prediction <- baron_group_gs_prediction_signif
+
+color <- c("#F8766D", "#E18A00", "#BE9C00", "#8CAB00", "#24B700", "#00BE70", "#00C1AB", "#00BBDA", "#00ACFC", "#8B93FF", "#D575FE", "#F962DD", "#FF65AC", "grey")
+ggcolor <- setNames(color,c(sort(unique(Baron$cell.type)), "unassigned"))
+
+ggPredictions <- DimPlot(Seger, group.by = "baron_group_gs_prediction", pt.size = 0.2, reduction = "tsne") + ggtitle("Predicitons") + scale_color_manual(values = ggcolor, drop =FALSE) + 
+  theme(legend.text = element_text(size =10), aspect.ratio = 1)
+ggOriginal <- DimPlot(Seger, group.by = "cell.type", pt.size = 0.2, reduction = "tsne") + ggtitle("Original") + scale_color_manual(values = ggcolor) + 
+  theme(legend.text = element_text(size =10), aspect.ratio = 1)
+ggarrange(ggOriginal, ggPredictions, legend = "top", common.legend = T)
+```
+
+# Cell-ID per-cell functionnal annotation against functional ontologies and pathway databases
+
+Once MCA is performed, per-cell signatures can be evaluated against any custom collection of gene signatures which can, e.g. represent functional terms or biological pathways. This allows Cell-ID to perfome a per-cell functional enrichment analysis enabling biological interpretation of cell's state. We illustrate here how to mine for that purpose a collection 7 sources of functional annotations: KEGG, Hallmark MSigDB, Reactome, WikiPathways, GO biological process, GO molecular function and GO cellular component. Gene sets associated to functional pathways and ontology terms can be obtained from [enrichr](http://amp.pharm.mssm.edu/Enrichr/#stats)
+
+Here we illustrateuse the Hallmark and KEGG pathways in HyperGeometric test and integrate the results into the Seurat object to visualise the -log10 pvalue of the enrichment into an UMAP.
+
+```{r, Functionnal Enrichment}
+# Downloading functional gene sets:
+# For computational reasons, we just developped here the assessment on KEGG and Hallmark MSigDB gene sets
+KEGG <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mode=text&libraryName=KEGG_2019_Human")
+
+# Genesets from Reactome, WikiPathways, GO biological process, GO molecular function and GO cellular component may be obtained as follows
+# REACTOME <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mode=text&libraryName=Reactome_2016")
+# WikiPathways <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mode=text&libraryName=WikiPathways_2019_Human")
+# GOBP <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mode=text&libraryName=GO_Biological_Process_2018")
+# GOCC <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mode=text&libraryName=GO_Cellular_Component_2018")
+# GOMF <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mode=text&libraryName=GO_Molecular_Function_2018")
+
+# Assessing per-cell functional enrichment analyses
+HGT_Hallmark <- RunCellHGT(Seger, pathways = Hallmark, dims = 1:50)
+HGT_KEGG <- RunCellHGT(Seger, pathways = KEGG, dims = 1:50)
+
+#Integrating functional annotations as an "assay" slot in the Seurat's objects
+Seger@assays[["Hallmark"]] <- CreateAssayObject(HGT_Hallmark)
+Seger@assays[["KEGG"]] <- CreateAssayObject(HGT_KEGG)
+
+# Visualizing per-cell functional enrichment annotations in a dimensionality-reduction representation of choice (e.g. MCA, PCA, tSNE, UMAP)
+ggG2Mcell <- FeaturePlot(Seger, "G2M-CHECKPOINT", order = T, reduction = "tsne", min.cutoff = 2) + 
+  theme(legend.text = element_text(size =10), aspect.ratio = 1)
+ggPancSecr <- FeaturePlot(Seger, "Pancreatic secretion", order = T, reduction = "tsne", min.cutoff = 2) + 
+  theme(legend.text = element_text(size =10), aspect.ratio = 1)
+ggarrange(ggG2Mcell, ggPancSecr)
+```
+
+# Session info {.unnumbered}
+
+```{r sessionInfo, echo=FALSE}
+sessionInfo()
+```
