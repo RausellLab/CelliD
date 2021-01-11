@@ -1,0 +1,52 @@
+Package: CelliD
+Type: Package
+Title: Unbiased Extraction of Single Cell gene signatures using Multiple Correspondence Analysis
+Version: 0.99.0
+Authors@R: person("Akira", "Cortal", email = "akira.cortal@institutimagine.org",
+  role = c("aut", "cre"))
+Description: CelliD is a clustering-free multivariate statistical method for the robust extraction of per-cell gene signatures from single-cell RNA-seq. 
+  CelliD allows unbiased cell identity recognition across different donors, tissues-of-origin, model organisms and single-cell omics protocols. 
+  The package can also be used to explore functional pathways enrichment in single cell data. 
+Depends:
+    R (>= 4.1),
+    Seurat,
+    SingleCellExperiment
+License: GPL-3 + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    RcppArmadillo,
+    stats,
+    utils,
+    Matrix,
+    tictoc,
+    scater,
+    stringr,
+    irlba,
+    scales,
+    data.table,
+    glue,
+    pbapply,
+    umap,
+    Rtsne,
+    reticulate,
+    fastmatch,
+    matrixStats,
+    ggplot2,
+    Rcpp,
+    BiocParallel,
+    SummarizedExperiment,
+    fgsea (>= 1.15.0)
+Suggests:
+    knitr,
+    rmarkdown,
+    BiocStyle,
+    testthat,
+    tidyverse,
+    ggpubr,
+    destiny,
+    ggrepel
+VignetteBuilder: knitr
+RoxygenNote: 7.1.1
+biocViews: RNASeq, SingleCell, DimensionReduction, Clustering, GeneSetEnrichment, GeneExpression, ATACSeq
+LinkingTo: Rcpp, RcppArmadillo

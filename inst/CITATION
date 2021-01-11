@@ -1,0 +1,8 @@
+bibentry(bibtype = "Article",
+         title = "Cell-{ID}: gene signature extraction and cell identity recognition at individual cell level",
+         journal = "bioRxiv",
+         author = c(person("Akira", "Cortal"), person("Loredana", "Martignetti"), person("Emanuelle", "Six"), person("Antonio", "Rausell")
+                    ),
+         year = "2020",
+         month = "July",
+         doi = "10.1101/2020.07.23.215525")
