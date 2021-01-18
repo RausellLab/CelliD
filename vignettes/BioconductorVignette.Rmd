@@ -23,7 +23,7 @@ antonio.rausell@institutimagine.org
 
 # Installation
 
-CelliD is based on R version >= 3.6. It contains dependencies with several CRAN and Biocondutor packages as described in the [Description file](https://github.com/cbl-imagine/CelliD/blob/master/DESCRIPTION)
+CelliD is based on R version >= 4.0. It contains dependencies with several CRAN and Biocondutor packages as described in the [Description file](https://github.com/cbl-imagine/CelliD/blob/master/DESCRIPTION)
 
 To install CelliD, set the repositories option to enable downloading Bioconductor dependencies:
 ```{r Installation, eval = FALSE}
@@ -49,7 +49,7 @@ library(ggpubr) #library for plotting
 
 ## Load Data
 
-To illustrate CelliD usage we will use throughout this vignette two publickly available pancreas single-cell RNA-seq data sets provided in [Baron et al. 2016](https://doi.org/10.1016/j.cels.2016.08.011) and [Segerstolpe et al. 2016](https://doi.org/10.1016/j.cmet.2016.08.020). 
+To illustrate CelliD usage we will use throughout this vignette two publicly available pancreas single-cell RNA-seq data sets provided in [Baron et al. 2016](https://doi.org/10.1016/j.cels.2016.08.011) and [Segerstolpe et al. 2016](https://doi.org/10.1016/j.cmet.2016.08.020). 
 We provide here for convenience the R objects with the raw counts gene expression matrices and associated metadata
 ```{r download data}
 #read data
@@ -298,13 +298,13 @@ ggarrange(ggOriginal, ggPredictions, legend = "top", common.legend = TRUE)
 
 Once MCA is performed, per-cell signatures can be evaluated against any custom collection of gene signatures which can, e.g. represent functional terms or biological pathways. This allows CelliD to perfome a per-cell functional enrichment analysis enabling biological interpretation of cell's state. We illustrate here how to mine for that purpose a collection 7 sources of functional annotations: KEGG, Hallmark MSigDB, Reactome, WikiPathways, GO biological process, GO molecular function and GO cellular component. Gene sets associated to functional pathways and ontology terms can be obtained from [enrichr](http://amp.pharm.mssm.edu/Enrichr/#stats)
 
-Here we illustrate the use of Hallmark and KEGG pathways in HyperGeometric test and integrate the results into the Seurat object to visualize the -log10 p-value of the enrichment into an UMAP.
+Here we illustrate the use of Hallmark in HyperGeometric test and integrate the results into the Seurat object to visualize the -log10 p-value of the enrichment into an UMAP.
 
 ```{r, Functionnal Enrichment}
 # Downloading functional gene sets:
 # For computational reasons, we just developed here the assessment on KEGG and Hallmark MSigDB gene sets
 
-KEGG <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mode=text&libraryName=KEGG_2019_Human")
+# KEGG <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mode=text&libraryName=KEGG_2019_Human")
 # Genesets from Reactome, WikiPathways, GO biological process, GO molecular function and GO cellular component may be obtained as follows
 # REACTOME <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mode=text&libraryName=Reactome_2016")
 # WikiPathways <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mode=text&libraryName=WikiPathways_2019_Human")
@@ -314,19 +314,16 @@ KEGG <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mo
 
 # Assessing per-cell functional enrichment analyses
 HGT_Hallmark <- RunCellHGT(Seger, pathways = Hallmark, dims = 1:50)
-HGT_KEGG <- RunCellHGT(Seger, pathways = KEGG, dims = 1:50)
 
 #Integrating functional annotations as an "assay" slot in the Seurat objects
 
-Seger@assays[["Hallmark"]] <- CreateAssayObject(HGT_Hallmark)
 Seger@assays[["KEGG"]] <- CreateAssayObject(HGT_KEGG)
 
 # Visualizing per-cell functional enrichment annotations in a dimensionality-reduction representation of choice (e.g. MCA, PCA, tSNE, UMAP)
 ggG2Mcell <- FeaturePlot(Seger, "G2M-CHECKPOINT", order = TRUE, reduction = "tsne", min.cutoff = 2) + 
   theme(legend.text = element_text(size =10), aspect.ratio = 1)
-ggPancSecr <- FeaturePlot(Seger, "Pancreatic secretion", order = TRUE, reduction = "tsne", min.cutoff = 2) + 
-  theme(legend.text = element_text(size =10), aspect.ratio = 1)
-ggarrange(ggG2Mcell, ggPancSecr)
+
+ggG2Mcell
 ```
 
 # Session info {.unnumbered}

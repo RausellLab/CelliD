@@ -15,6 +15,7 @@ License: GPL-3 + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
+    Rcpp,
     RcppArmadillo,
     stats,
     utils,
@@ -23,7 +24,6 @@ Imports:
     scater,
     stringr,
     irlba,
-    scales,
     data.table,
     glue,
     pbapply,
@@ -33,10 +33,9 @@ Imports:
     fastmatch,
     matrixStats,
     ggplot2,
-    Rcpp,
     BiocParallel,
     SummarizedExperiment,
-    fgsea (>= 1.15.0)
+    fgsea
 Suggests:
     knitr,
     rmarkdown,
