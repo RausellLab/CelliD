@@ -317,7 +317,7 @@ HGT_Hallmark <- RunCellHGT(Seger, pathways = Hallmark, dims = 1:50)
 
 #Integrating functional annotations as an "assay" slot in the Seurat objects
 
-Seger@assays[["KEGG"]] <- CreateAssayObject(HGT_KEGG)
+Seger@assays[["Hallmark"]] <- CreateAssayObject(HGT_Hallmark)
 
 # Visualizing per-cell functional enrichment annotations in a dimensionality-reduction representation of choice (e.g. MCA, PCA, tSNE, UMAP)
 ggG2Mcell <- FeaturePlot(Seger, "G2M-CHECKPOINT", order = TRUE, reduction = "tsne", min.cutoff = 2) + 
