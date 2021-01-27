@@ -15,7 +15,7 @@ CelliD is a robust statistical method that performs gene signature extraction an
 
 ## Installation
 
-CelliD is provided as an R package (R version >= 4.0). It contains dependencies with several Bioconductor packages as described in the [Description file](https://github.com/cbl-imagine/CelliD/blob/master/DESCRIPTION)
+CelliD is provided as an R package (R version >= 4.0). It contains dependencies with several Bioconductor packages as described in the [Description file](https://github.com/RausellLab/CelliD/blob/master/DESCRIPTION)
 
 Within R, set first:
 ```r
