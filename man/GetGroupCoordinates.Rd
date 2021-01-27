@@ -9,11 +9,14 @@
 \usage{
 GetGroupCoordinates(X, group.by, reduction, dims, ...)
 
-\method{GetGroupCoordinates}{matrix}(X, group.by, reduction = NULL, dims, ...)
+\method{GetGroupCoordinates}{matrix}(X, group.by, reduction = NULL, dims,
+  ...)
 
-\method{GetGroupCoordinates}{Seurat}(X, group.by = NULL, reduction = "mca", dims = seq(50), ...)
+\method{GetGroupCoordinates}{Seurat}(X, group.by = NULL,
+  reduction = "mca", dims = seq(50), ...)
 
-\method{GetGroupCoordinates}{SingleCellExperiment}(X, group.by = NULL, reduction = "MCA", dims, ...)
+\method{GetGroupCoordinates}{SingleCellExperiment}(X, group.by = NULL,
+  reduction = "MCA", dims, ...)
 }
 \arguments{
 \item{X}{Seurat or SingleCellExperiment object, alternatively a matrix.}

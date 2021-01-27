@@ -8,41 +8,31 @@
 \usage{
 GetCellGeneRanking(X, reduction, dims, features, cells)
 
-\method{GetCellGeneRanking}{Seurat}(
-  X,
-  reduction = "mca",
-  dims = seq(50),
-  features = NULL,
-  cells = NULL
-)
+\method{GetCellGeneRanking}{Seurat}(X, reduction = "mca",
+  dims = seq(50), features = NULL, cells = NULL)
 
-\method{GetCellGeneRanking}{SingleCellExperiment}(
-  X,
-  reduction = "MCA",
-  dims = seq(50),
-  features = NULL,
-  cells = NULL
-)
+\method{GetCellGeneRanking}{SingleCellExperiment}(X, reduction = "MCA",
+  dims = seq(50), features = NULL, cells = NULL)
 }
 \arguments{
-\item{X}{Seurat or SingleCellExperiment Object}
+\item{X}{Seurat or SingleCell Experiment Object}
 
 \item{reduction}{Which dimensionality reduction to use, must be based on MCA.}
 
-\item{dims}{A vector of integers indicating which dimensions to use with reduction embedding and loading for distance calculation.}
+\item{dims}{A vector of integers indicating which dimensions to use with reduction embeddings and loadings for distance calculation.}
 
-\item{features}{Character vector of feature names to subset feature coordinates. If not specified will take all features available from specified reduction Loading}
+\item{features}{Character vector of feature names to subset feature coordinates. If not specified will take all features available from specified reduction Loadings}
 
-\item{cells}{Character vector of cell names to subset cell coordinates. If not specified will take all features available from specified reduction Embedding.}
+\item{cells}{Character vector of cell names to subset cell coordinates. If not specified will take all features available from specified reduction Embeddigns.}
 }
 \value{
-A cell named list of gene rankings ordererd by distances from shortest (most specific) to farthest (less specific)
+A cell named list of gene rankings ordererd by distances from shortest (most specfic) to farthest (less specific)
 }
 \description{
-Intermediate function for ranking extraction from Cell Gene Distance Matrix. Genes are ordered from the most specific to the least specific to the cell.
-Value indicates the euclidean distances between the cell and the genes in the MCA coordinates.
+Intermediate function for ranking extraction feom Cell Gene Distance Matrix
 }
 \examples{
+\dontrun{
 seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)
-ranking <- GetCellGeneRanking(seuratPbmc, reduction = "mca", dims = 1:5)
+}
 }

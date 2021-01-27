@@ -2,26 +2,31 @@
 #' @import Seurat
 #' @import SingleCellExperiment
 #' @import Matrix
-#' @import RcppArmadillo
+#' @import matrixStats
+#' @import irlba
 #' @import data.table
 #' @import scater
 #' @import fgsea
 #' @import ggplot2
 #' @import tictoc
 #' @import BiocParallel
+#' @importFrom  plotly plotly_build
+#' @import stringr
 #' @import fastmatch
-#' @importFrom stringr str_length
-#' @importFrom irlba irlba
+#' @import RColorBrewer
+#' @import tictoc
+#' @importFrom destiny DiffusionMap
 #' @importFrom glue glue
-#' @importFrom matrixStats rowVars
 #' @importFrom pbapply pblapply
+#' @importFrom ggrepel geom_text_repel
 #' @importFrom fastmatch fmatch
 #' @importFrom Rtsne Rtsne
 #' @importFrom umap umap
+#' @importFrom grDevices colorRampPalette hcl
 #' @importFrom utils menu setTxtProgressBar txtProgressBar
 #' @importFrom stats na.omit p.adjust
+#' @useDynLib CellID
 #' @importFrom Rcpp sourceCpp
-#' @useDynLib CelliD
 #' @return  updates NAMESPACE import
 import <- function() {
     print("this is a dummy function for roxygen")

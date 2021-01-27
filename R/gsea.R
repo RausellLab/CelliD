@@ -40,23 +40,23 @@ RunCellGSEA.Seurat <-
              n.core = 1) {
         # Check -------------------------------------------------------------------
         check <-
-            checkCelliDArg(
-                X = X,
+            checkCellIDArg(
+                X         = X,
                 reduction = reduction,
-                dims = dims,
-                features = features,
-                cells = cells
+                dims      = dims,
+                features  = features,
+                cells     = cells
             )
         features <- check$features
-        dims <- check$dims
-        cells <- check$cells
+        dims     <- check$dims
+        cells    <- check$cells
 
         # Parallel ----------------------------------------------------------------
         BPPARAM <- BiocParallel::bpparam()
         BPPARAM$workers <- n.core
         BPPARAM$tasks <- as.integer(n.core * 5)
         BPPARAM$progressbar <- TRUE
-
+        
         # Ranking -----------------------------------------------------------------
         CellGeneDist <-
             GetCellGeneDistance(
@@ -69,13 +69,13 @@ RunCellGSEA.Seurat <-
         CellGeneDist <- as.data.table(CellGeneDist, "features")
         features <- CellGeneDist$features
         message("starting GSEA")
-        gseaResults <- bplapply(CellGeneDist[, -1], fgseaCelliDPar,
-            pathways = pathways,
-            features = features,
-            nperm = nperm,
-            minSize = minSize,
-            maxSize = maxSize,
-            BPPARAM = BPPARAM
+        gseaResults <- bplapply(CellGeneDist[,-1], fgseaCellIDPar,
+                   pathways = pathways,
+                   features = features,
+                   nperm = nperm,
+                   minSize = minSize,
+                   maxSize = maxSize,
+                   BPPARAM = BPPARAM
         )
         gseaResults <- rbindlist(gseaResults, idcol = "cell")
         return(gseaResults)
@@ -97,7 +97,7 @@ RunCellGSEA.SingleCellExperiment <-
              n.core = 1) {
         # Check -------------------------------------------------------------------
         check <-
-            checkCelliDArg(
+            checkCellIDArg(
                 X = X,
                 reduction = reduction,
                 dims = dims,
@@ -113,7 +113,7 @@ RunCellGSEA.SingleCellExperiment <-
         BPPARAM$workers <- n.core
         BPPARAM$tasks <- as.integer(n.core * 5)
         BPPARAM$progressbar <- TRUE
-
+        
         # Ranking -----------------------------------------------------------------
         CellGeneDist <-
             GetCellGeneDistance(
@@ -126,13 +126,13 @@ RunCellGSEA.SingleCellExperiment <-
         CellGeneDist <- as.data.table(CellGeneDist, "features")
         features <- CellGeneDist$features
         message("starting GSEA")
-        bplapply(CellGeneDist[, -1], fgseaCelliDPar,
-            pathways = pathways,
-            features = features,
-            nperm = nperm,
-            minSize = minSize,
-            maxSize = maxSize,
-            BPPARAM = BPPARAM
+        bplapply(CellGeneDist[,-1], fgseaCellIDPar,
+                 pathways = pathways,
+                 features = features,
+                 nperm = nperm,
+                 minSize = minSize,
+                 maxSize = maxSize,
+                 BPPARAM = BPPARAM
         )
         gseaResults <- rbindlist(gseaResults, idcol = "cell")
         return(gseaResults)
@@ -171,7 +171,7 @@ RunGroupGSEA <-
 RunGroupGSEA.Seurat <-
     function(X, pathways, group.by = NULL, reduction = "mca", dims = seq(50), features = NULL, nperm = 1000, minSize = 10, maxSize = 500, gseaParam = 0) {
         check <-
-            checkCelliDArg(
+            checkCellIDArg(
                 X = X,
                 group.by = group.by,
                 reduction = reduction,
@@ -193,28 +193,24 @@ RunGroupGSEA.Seurat <-
                 features = features
             )
         GroupGeneRanking <-
-            lapply(GroupGeneRanking, function(i) {
-                  (i + 0.1)^-1
-              })
+            lapply(GroupGeneRanking, function(i)
+                (i + 0.1)^-1)
         gseaResultsAll <- lapply(GroupGeneRanking, function(x,
-                                                            pathways,
-                                                            nperm,
-                                                            minSize,
-                                                            maxSize) {
+                                                                pathways,
+                                                                nperm,
+                                                                minSize,
+                                                                maxSize) {
             stats <- x
-            gseaResults <- CelliD::fgseaCelliD(
+            gseaResults <- CellID::fgseaCellID(
                 pathways = pathways,
                 stats = stats,
                 nperm = nperm,
                 minSize = minSize,
                 maxSize = maxSize
-            )
-        },
-        pathways = pathways,
-        nperm = nperm,
-        minSize = minSize,
-        maxSize = maxSize
-        )
+            )}, pathways = pathways,
+            nperm = nperm,
+            minSize = minSize,
+            maxSize = maxSize)
         gseaResultsAll <-
             rbindlist(gseaResultsAll, idcol = "cell")
         setnames(gseaResultsAll, "cell", "group")
@@ -226,7 +222,7 @@ RunGroupGSEA.Seurat <-
 RunGroupGSEA.SingleCellExperiment <-
     function(X, pathways, group.by, reduction = "MCA", dims = seq(50), features = NULL, nperm = 1000, minSize = 10, maxSize = 500, gseaParam = 0) {
         check <-
-            checkCelliDArg(
+            checkCellIDArg(
                 X = X,
                 group.by = group.by,
                 reduction = reduction,
@@ -248,25 +244,23 @@ RunGroupGSEA.SingleCellExperiment <-
                 features = features
             )
         GroupGeneRanking <-
-            lapply(GroupGeneRanking, function(i) {
-                  (i + 0.1)^-1
-              })
+            lapply(GroupGeneRanking, function(i)
+                (i + 0.1)^-1)
         gseaResultsAll <- lapply(GroupGeneRanking, function(x,
-                                                            pathways,
-                                                            features,
-                                                            nperm,
-                                                            minSize,
-                                                            maxSize) {
+                                                                pathways,
+                                                                features,
+                                                                nperm,
+                                                                minSize,
+                                                                maxSize) {
             stats <- x
-            gseaResults <- CelliD::fgseaCelliD(
+            gseaResults <- CellID::fgseaCellID(
                 pathways = pathways,
                 stats = stats,
                 nperm = nperm,
                 minSize = minSize,
                 maxSize = maxSize,
                 .progress = TRUE
-            )
-        })
+            )})
         gseaResultsAll <-
             rbindlist(gseaResultsAll, idcol = "cell")
         setnames(gseaResultsAll, "cell", "group")
@@ -328,14 +322,14 @@ integrateGSEASeurat <- function(X, gseaResults, assay.name) {
 calcGseaStatCumulativeBatch <-
     getFromNamespace("calcGseaStatCumulativeBatch", "fgsea")
 
-#' reworked fgsea for ram and speed efficiency in CelliD
+#' reworked fgsea for ram and speed efficiency in CellID
 #'
 #' @param pathways List of gene sets to check
 #' @param stats Named vector of gene-level stats. Names should be the same as in 'pathways'
-#' @param nperm Number of permutations to do. Minimal possible nominal p-value is about 1/nperm
+#' @param nperm Number of permutations to do. Minimial possible nominal p-value is about 1/nperm
 #' @param minSize Minimal size of a gene set to test. All pathways below the threshold are excluded.
 #' @param maxSize Maximal size of a gene set to test. All pathways above the threshold are excluded.
-#' @param gseaParam GSEA parameter value, all gene-level stats are raised to the power of 'gseaParam' before calculation of GSEA enrichment scores
+#' @param gseaParam GSEA parameter value, all gene-level statis are raised to the power of 'gseaParam' before calculation of GSEA enrichment scores
 #'
 #' @return A table with GSEA results. Each row corresponds to a tested pathway.
 #' The columns are the following:
@@ -351,12 +345,7 @@ calcGseaStatCumulativeBatch <-
 #'   \item leadingEdge -- vector with indexes of leading edge genes that drive the enrichment, see \url{http://software.broadinstitute.org/gsea/doc/GSEAUserGuideTEXT.htm#_Running_a_Leading}.
 #' }
 #' @export
-#' 
-#' @examples 
-#' seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)
-#' ranking <- GetCellGeneRanking(seuratPbmc, reduction = "mca", dims = 1:5)
-#' fgseaCelliD(pathways = Hallmark, stats = ranking[[1]])
-fgseaCelliD <-
+fgseaCellID <-
     function(pathways, stats, nperm = 1000, minSize = 10, maxSize = 500, gseaParam = 0) {
         # remove note
         . <- NULL
@@ -373,7 +362,8 @@ fgseaCelliD <-
             as.vector(na.omit(fastmatch::fmatch(p, names(stats))))
         })
         pathwaysSizes <-
-            vapply(X = pathwaysFiltered, FUN = length, FUN.VALUE = as.integer(0))
+            vapply(X = pathwaysFiltered, FUN = length, FUN.VALUE = as.integer(0)
+            )
         toKeep <-
             which(minSize <= pathwaysSizes & pathwaysSizes <= maxSize)
         m <- length(toKeep)
@@ -477,14 +467,13 @@ fgseaCelliD <-
         return(pvals)
     }
 
-fgseaCelliDPar <- function(x, pathways, features, nperm, minSize, maxSize) {
-    x <- (x + 0.1)^-1
+fgseaCellIDPar <- function(x, pathways, features, nperm, minSize, maxSize) {
+    x <- (x+0.1)^-1
     names(x) <- features
-    gseaResults <- CelliD::fgseaCelliD(
+    gseaResults <- CellID::fgseaCellID(
         pathways = pathways,
         stats = x,
         nperm = nperm,
         minSize = minSize,
         maxSize = maxSize
-    )
-}
+    )}

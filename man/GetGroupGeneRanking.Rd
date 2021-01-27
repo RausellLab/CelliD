@@ -8,21 +8,11 @@
 \usage{
 GetGroupGeneRanking(X, group.by, reduction, dims, features)
 
-\method{GetGroupGeneRanking}{Seurat}(
-  X,
-  group.by = NULL,
-  reduction = "mca",
-  dims = seq(50),
-  features = NULL
-)
+\method{GetGroupGeneRanking}{Seurat}(X, group.by = NULL,
+  reduction = "mca", dims = seq(50), features = NULL)
 
-\method{GetGroupGeneRanking}{SingleCellExperiment}(
-  X,
-  group.by,
-  reduction = "MCA",
-  dims = seq(50),
-  features = NULL
-)
+\method{GetGroupGeneRanking}{SingleCellExperiment}(X, group.by,
+  reduction = "MCA", dims = seq(50), features = NULL)
 }
 \arguments{
 \item{X}{Seurat or SingleCellExperiment object, alternatively a matrix.}

@@ -4,19 +4,11 @@
 \alias{DimPlotMC}
 \title{Seurat DimPlot for MCA like Dimensionality Reduction}
 \usage{
-DimPlotMC(
-  X,
-  reduction = "mca",
-  dims = c(1, 2),
-  features = NULL,
-  size.feature = 2,
-  size.feature.text = 5,
-  as.text = FALSE,
-  ...
-)
+DimPlotMC(X, reduction = "mca", dims = c(1, 2), features = NULL,
+  size.feature = 2, size.feature.text = 5, as.text = FALSE, ...)
 }
 \arguments{
-\item{X}{a Seurat object}
+\item{X}{a seurat object}
 
 \item{reduction}{Which dimensionality reduction to use. If not specified, searches for mca.}
 
@@ -40,5 +32,5 @@ Small modification of the regular Seurat DimPlot function to enable plotting fea
 }
 \examples{
 seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)
-seuratPbmc <- DimPlotMC(seuratPbmc, features = Seurat::VariableFeatures(seuratPbmc))
+seuratPbmc <- DimPlotMC(seuratPbmc,  features = Seurat::VariableFeatures(seuratPbmc))
 }

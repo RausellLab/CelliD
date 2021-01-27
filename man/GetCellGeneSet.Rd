@@ -8,23 +8,11 @@
 \usage{
 GetCellGeneSet(X, reduction = "mca", dims, features, cells, n.features)
 
-\method{GetCellGeneSet}{Seurat}(
-  X,
-  reduction = "mca",
-  dims = seq(50),
-  features = NULL,
-  cells = NULL,
-  n.features = 200
-)
+\method{GetCellGeneSet}{Seurat}(X, reduction = "mca", dims = seq(50),
+  features = NULL, cells = NULL, n.features = 200)
 
-\method{GetCellGeneSet}{SingleCellExperiment}(
-  X,
-  reduction = "MCA",
-  dims = seq(50),
-  features = NULL,
-  cells = NULL,
-  n.features = 200
-)
+\method{GetCellGeneSet}{SingleCellExperiment}(X, reduction = "MCA",
+  dims = seq(50), features = NULL, cells = NULL, n.features = 200)
 }
 \arguments{
 \item{X}{Seurat or SingleCell Experiment Object}
@@ -47,5 +35,5 @@ Calculate cells and genes distances, rank them per cell and extract top n featur
 }
 \examples{
 seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)
-GroupGeneRanking <- GetGroupGeneRanking(seuratPbmc, group.by = "seurat_clusters", dims = 1:5)
+GroupGeneRanking <- GetGroupGeneRanking(seuratPbmc, group.by = "seurat_clusters", dims = 1:5) 
 }

@@ -8,24 +8,12 @@
 \usage{
 RunMCDMAP(X, reduction, features, dims, reduction.name, ...)
 
-\method{RunMCDMAP}{Seurat}(
-  X,
-  reduction = "mca",
-  features = NULL,
-  dims = seq(50),
-  reduction.name = "mcdmap",
-  assay = DefaultAssay(X),
-  ...
-)
+\method{RunMCDMAP}{Seurat}(X, reduction = "mca", features = NULL,
+  dims = seq(50), reduction.name = "mcdmap", assay = DefaultAssay(X),
+  ...)
 
-\method{RunMCDMAP}{SingleCellExperiment}(
-  X,
-  reduction = "MCA",
-  features = NULL,
-  dims = seq(50),
-  reduction.name = "MCDMAP",
-  ...
-)
+\method{RunMCDMAP}{SingleCellExperiment}(X, reduction = "MCA",
+  features = NULL, dims = seq(50), reduction.name = "MCDMAP", ...)
 }
 \arguments{
 \item{X}{Seurat or SingleCellExperiment object}
@@ -50,5 +38,5 @@ Run DiffusionMap on MCA cell and feature coordinates
 }
 \examples{
 seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)
-seuratPbmc <- RunMCDMAP(seuratPbmc, dims = seq(5), k = 5)
+seuratPbmc <- RunMCDMAP(seuratPbmc, dims = seq(5))
 }

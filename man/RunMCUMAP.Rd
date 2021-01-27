@@ -8,24 +8,12 @@
 \usage{
 RunMCUMAP(X, reduction, dims, features, reduction.name, ...)
 
-\method{RunMCUMAP}{Seurat}(
-  X,
-  reduction = "mca",
-  dims = seq(50),
-  features = NULL,
-  reduction.name = "mcumap",
-  assay = DefaultAssay(X),
-  ...
-)
+\method{RunMCUMAP}{Seurat}(X, reduction = "mca", dims = seq(50),
+  features = NULL, reduction.name = "mcumap",
+  assay = DefaultAssay(X), ...)
 
-\method{RunMCUMAP}{SingleCellExperiment}(
-  X,
-  reduction = "MCA",
-  dims = seq(50),
-  features = NULL,
-  reduction.name = "MCUMAP",
-  ...
-)
+\method{RunMCUMAP}{SingleCellExperiment}(X, reduction = "MCA",
+  dims = seq(50), features = NULL, reduction.name = "MCUMAP", ...)
 }
 \arguments{
 \item{X}{Seurat or SingleCellExperiment object}

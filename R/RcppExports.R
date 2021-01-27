@@ -2,14 +2,14 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 fastPDist <- function(Ar, Br) {
-    .Call('_CelliD_fastPDist', PACKAGE = 'CelliD', Ar, Br)
+    .Call('_CellID_fastPDist', PACKAGE = 'CellID', Ar, Br)
 }
 
 MCAStep1 <- function(X) {
-    .Call('_CelliD_MCAStep1', PACKAGE = 'CelliD', X)
+    .Call('_CellID_MCAStep1', PACKAGE = 'CellID', X)
 }
 
 MCAStep2 <- function(Z, V, Dc) {
-    .Call('_CelliD_MCAStep2', PACKAGE = 'CelliD', Z, V, Dc)
+    .Call('_CellID_MCAStep2', PACKAGE = 'CellID', Z, V, Dc)
 }
 

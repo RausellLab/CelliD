@@ -4,9 +4,7 @@
 \name{seuratPbmc}
 \alias{seuratPbmc}
 \title{Seurat object of 400 PBMC cells}
-\format{
-A seurat object.
-}
+\format{A seurat object.}
 \source{
 \url{https://s3-us-west-2.amazonaws.com/10x.files/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz}
 }

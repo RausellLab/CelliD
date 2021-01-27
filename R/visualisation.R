@@ -2,7 +2,7 @@
 #'
 #' Small modification of the regular Seurat DimPlot function to enable plotting features for mca like dimensionality reduction.
 #'
-#' @param X a Seurat object
+#' @param X a seurat object
 #' @param reduction Which dimensionality reduction to use. If not specified, searches for mca.
 #' @param dims Dimensions to plot, must be a two-length numeric vector specifying x- and y-dimensions
 #' @param features character vector of features to plot, must be present in the specified dimension loadings
@@ -12,15 +12,16 @@
 #' @param ... Other arguments passed to DimPlot
 #'
 #' @importFrom Seurat DimPlot
+#' @importFrom ggrepel geom_text_repel
 #' @return A ggplot object
 #' @export
 #'
 #' @examples
 #' seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)
-#' seuratPbmc <- DimPlotMC(seuratPbmc, features = Seurat::VariableFeatures(seuratPbmc))
+#' seuratPbmc <- DimPlotMC(seuratPbmc,  features = Seurat::VariableFeatures(seuratPbmc))
 DimPlotMC <-
     function(X, reduction = "mca", dims = c(1, 2), features = NULL, size.feature = 2, size.feature.text = 5, as.text = FALSE, ...) {
-        check <- checkCelliDArg(
+        check <-checkCellIDArg(
             X = X,
             dims = dims,
             reduction = reduction,
@@ -40,12 +41,11 @@ DimPlotMC <-
         MCPlot <-
             DimPlot(X, dims = dims, reduction = reduction, ...) + geom_point(
                 data = featureData,
-                mapping = aes_string(x = DIM1, y = DIM2, text = "features", fill = "genes"),
+                mapping = aes_string(x = DIM1, y = DIM2, text = "features",fill = "genes"),
                 size = size.feature,
                 shape = 4
-            ) + scale_fill_identity(name = "genes", labels = c(""), guide = "legend")
+            ) + scale_fill_identity(name = 'genes', labels = c(""), guide = 'legend')
         if (as.text) {
-            requireNamespace("ggrepel", quietly = TRUE)
             if (length(features) > 50) {
                 if (menu(
                     choices = c("Yes", "No"),
@@ -90,29 +90,46 @@ DimPlotMC <-
 #'
 #' @export
 #' @importFrom scater plotReducedDim
+#' @importFrom ggrepel geom_text_repel
 #'
 #' @examples
 #' scePBMC <- as.SingleCellExperiment(seuratPbmc)
 #' scePBMC <- RunMCA(scePBMC, nmcs = 5)
 #' plotReducedDimMC(scePBMC)
 plotReducedDimMC <-
-    function(X, reduction = "MCA", dims = c(1, 2), features = NULL, size.feature = 3, size.feature.text = 5, as.text = FALSE, ...) {
-        check <- checkCelliDArg(X, reduction = reduction, dims = dims, features = features, group.by = NULL)
+    function(X, reduction = "MCA", dims = c(1,2), features = NULL, size.feature = 3, size.feature.text = 5, as.text = FALSE, ...) {
+        check <-
+            checkCellIDArg(
+                X,
+                reduction = reduction,
+                dims = dims,
+                features = features,
+                group.by = NULL
+            )
         features <- check$features
         dims <- check$dims
-        featureData <- as.data.frame(attr(reducedDim(X, reduction), "genesCoordinates"))[features, dims]
-        featureData <- as.data.table(featureData, keep.rownames = "features")
+        featureData <-
+            as.data.frame(attr(reducedDim(X, reduction), "genesCoordinates"))[features, dims]
+        featureData <-
+            as.data.table(featureData, keep.rownames = "features")
         DIM1 <- colnames(featureData)[2]
         DIM2 <- colnames(featureData)[3]
         MCPlot <-
-            plotReducedDim(X, ncomponents = dims, dimred = reduction, ...) +
-            geom_point(data = featureData, mapping = aes_string(x = DIM1, y = DIM2, text = "features"), size = size.feature, shape = 4)
+            plotReducedDim(X,
+                           ncomponents = dims,
+                           dimred = reduction,
+                           ...
+            ) + geom_point(
+                data = featureData,
+                mapping = aes_string(x = DIM1, y = DIM2, text ="features"),
+                size = size.feature,
+                shape = 4
+            )
         if (as.text) {
-            requireNamespace("ggrepel", quietly = TRUE)
             if (length(features) > 50) {
                 if (menu(
                     choices = c("Yes", "No"),
-                    title = "you are plotting as Text more than 50 genes, this can take a long time to plot, continue?"
+                    title = "you are plotting as Text more than 50 genes, this can take along time to plot, continue?"
                 ) == 2) {
                     stop()
                 }
@@ -129,5 +146,8 @@ plotReducedDimMC <-
                     point.padding = 0.2
                 )
         }
+        # Plotly Hover
+        # MCPlot <- plotly_build(MCPlot)
+        # MCPlot$x$data[[length(MCPlot$x$data)]]$text <- str_remove(MCPlot$x$data[[length(MCPlot$x$data)]]$text, "<br.*")
         return(MCPlot)
     }

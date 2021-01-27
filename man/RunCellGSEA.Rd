@@ -6,47 +6,17 @@
 \alias{RunCellGSEA.SingleCellExperiment}
 \title{Run Gene Set Enrichment Analysis on cells}
 \usage{
-RunCellGSEA(
-  X,
-  pathways,
-  reduction,
-  dims,
-  features,
-  cells,
-  nperm,
-  minSize,
-  maxSize,
-  gseaParam,
-  n.core
-)
+RunCellGSEA(X, pathways, reduction, dims, features, cells, nperm, minSize,
+  maxSize, gseaParam, n.core)
 
-\method{RunCellGSEA}{Seurat}(
-  X,
-  pathways,
-  reduction = "mca",
-  dims = seq(50),
-  features = NULL,
-  cells = NULL,
-  nperm = 1000,
-  minSize = 10,
-  maxSize = 500,
-  gseaParam = 0,
-  n.core = 1
-)
+\method{RunCellGSEA}{Seurat}(X, pathways, reduction = "mca",
+  dims = seq(50), features = NULL, cells = NULL, nperm = 1000,
+  minSize = 10, maxSize = 500, gseaParam = 0, n.core = 1)
 
-\method{RunCellGSEA}{SingleCellExperiment}(
-  X,
-  pathways,
-  reduction = "mca",
-  dims = seq(50),
-  features = NULL,
-  cells = NULL,
-  nperm = 1000,
-  minSize = 10,
-  maxSize = 500,
-  gseaParam = 0,
-  n.core = 1
-)
+\method{RunCellGSEA}{SingleCellExperiment}(X, pathways,
+  reduction = "mca", dims = seq(50), features = NULL, cells = NULL,
+  nperm = 1000, minSize = 10, maxSize = 500, gseaParam = 0,
+  n.core = 1)
 }
 \arguments{
 \item{X}{Seurat or SingleCellExperiment object}

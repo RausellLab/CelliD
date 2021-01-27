@@ -8,21 +8,11 @@
 \usage{
 GetGroupGeneDistance(X, group.by, reduction, dims, features)
 
-\method{GetGroupGeneDistance}{Seurat}(
-  X,
-  group.by = NULL,
-  reduction = "mca",
-  dims = seq(50),
-  features = NULL
-)
+\method{GetGroupGeneDistance}{Seurat}(X, group.by = NULL,
+  reduction = "mca", dims = seq(50), features = NULL)
 
-\method{GetGroupGeneDistance}{SingleCellExperiment}(
-  X,
-  group.by,
-  reduction = "MCA",
-  dims = seq(50),
-  features = NULL
-)
+\method{GetGroupGeneDistance}{SingleCellExperiment}(X, group.by,
+  reduction = "MCA", dims = seq(50), features = NULL)
 }
 \arguments{
 \item{X}{Seurat or SingleCellExperiment object, alternatively a matrix.}

@@ -1,51 +1,51 @@
-Package: CelliD
+Package: CellID
 Type: Package
-Title: Unbiased Extraction of Single Cell gene signatures using Multiple Correspondence Analysis
-Version: 0.99.3
+Title: Unbiased Extraction of Single Cell Identity using Multiple Correspondence Analysis
+Version: 1.0.0
 Authors@R: person("Akira", "Cortal", email = "akira.cortal@institutimagine.org",
   role = c("aut", "cre"))
-Description: CelliD is a clustering-free multivariate statistical method for the robust extraction of per-cell gene signatures from single-cell RNA-seq. 
-  CelliD allows unbiased cell identity recognition across different donors, tissues-of-origin, model organisms and single-cell omics protocols. 
-  The package can also be used to explore functional pathways enrichment in single cell data. 
+Description: The exhaustive exploration of human cell heterogeneity requires the unbiased identification of molecular signatures that can serve as unique cell identity cards for every cell in the body. However, the stochasticity associated with high-throughput single-cell RNA sequencing has made it necessary to use clustering-based computational approaches in which the transcriptional characterization of cell-type heterogeneity is performed at cell-subpopulation level rather than at full single-cell resolution. We present here Cell-ID, a clustering-free multivariate statistical method for the robust extraction of per-cell gene signatures from single-cell RNA-seq. Cell-ID allows unbiased cell identity recognition across different donors, tissues-of-origin, model organisms and single-cell omics protocols. Cell-ID is distributed as an open-source R software package: https://github.com/RausellLab/CelliD.
 Depends:
-    R (>= 4.1),
+    R (>= 3.6),
     Seurat,
     SingleCellExperiment
-License: GPL-3 + file LICENSE
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports:
-    Rcpp,
     RcppArmadillo,
     stats,
     utils,
+    grDevices,
     Matrix,
+    plotly,
+    RColorBrewer,
     tictoc,
     scater,
     stringr,
     irlba,
+    scales,
     data.table,
     glue,
     pbapply,
     umap,
     Rtsne,
     reticulate,
+    destiny,
     fastmatch,
     matrixStats,
     ggplot2,
+    ggrepel,
+    Rcpp,
     BiocParallel,
     SummarizedExperiment,
     fgsea
 Suggests:
     knitr,
     rmarkdown,
-    BiocStyle,
-    testthat,
-    tidyverse,
-    ggpubr,
-    destiny,
-    ggrepel
+    readr,
+    BiocStyle
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 6.1.1
 biocViews: RNASeq, SingleCell, DimensionReduction, Clustering, GeneSetEnrichment, GeneExpression, ATACSeq
 LinkingTo: Rcpp, RcppArmadillo

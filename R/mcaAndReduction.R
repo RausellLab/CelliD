@@ -15,7 +15,7 @@
 #'
 #' @examples
 #' seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)
-#' seuratPbmc <- RunMCDMAP(seuratPbmc, dims = seq(5), k = 5)
+#' seuratPbmc <- RunMCDMAP(seuratPbmc, dims = seq(5))
 RunMCDMAP <-
     function(X, reduction, features, dims, reduction.name, ...) {
         UseMethod("RunMCDMAP", X)
@@ -26,7 +26,6 @@ RunMCDMAP <-
 #' @export
 RunMCDMAP.Seurat <-
     function(X, reduction = "mca", features = NULL, dims = seq(50), reduction.name = "mcdmap", assay = DefaultAssay(X), ...) {
-        requireNamespace("destiny", quietly = TRUE)
         GeneCellCoordinates <-
             GetGeneCellCoordinates(
                 X = X,
@@ -34,7 +33,7 @@ RunMCDMAP.Seurat <-
                 dims = dims,
                 features = features
             )
-        if (any(duplicated(GeneCellCoordinates))) {
+        if(any(duplicated(GeneCellCoordinates))){
             GeneCellCoordinates[duplicated(GeneCellCoordinates), ncol(GeneCellCoordinates)] <- GeneCellCoordinates[duplicated(GeneCellCoordinates), ncol(GeneCellCoordinates)] + runif(min = 10^-6, max = 10^-5, n = sum(duplicated(GeneCellCoordinates)))
         }
         MCDMAP <-
@@ -42,7 +41,7 @@ RunMCDMAP.Seurat <-
         Emb <- MCDMAP@eigenvectors
         rownames(Emb) <- rownames(GeneCellCoordinates)
         cellEmb <- Emb[rownames(Emb) %in% rownames(Embeddings(X, reduction)), ]
-        geneEmb <- Emb[!rownames(Emb) %in% rownames(Embeddings(X, reduction)), ]
+        geneEmb <- Emb[!rownames(Emb) %in% rownames(Embeddings(X, reduction)),]
         X <-
             setDimMCSlot(
                 X = X,
@@ -58,7 +57,6 @@ RunMCDMAP.Seurat <-
 #' @export
 RunMCDMAP.SingleCellExperiment <-
     function(X, reduction = "MCA", features = NULL, dims = seq(50), reduction.name = "MCDMAP", ...) {
-        requireNamespace("destiny", quietly = TRUE)
         GeneCellCoordinates <-
             GetGeneCellCoordinates(
                 X = X,
@@ -70,7 +68,7 @@ RunMCDMAP.SingleCellExperiment <-
             destiny::DiffusionMap(data = GeneCellCoordinates, ...)
         Emb <- MCDMAP@eigenvectors
         rownames(Emb) <- rownames(GeneCellCoordinates)
-        geneEmb <- Emb[!rownames(Emb) %in% rownames(reducedDim(X, reduction)), ]
+        geneEmb <- Emb[!rownames(Emb) %in% rownames(reducedDim(X, reduction)),]
         cellEmb <- Emb[rownames(Emb) %in% rownames(reducedDim(X, reduction)), ]
         X <-
             setDimMCSlot(
@@ -126,7 +124,7 @@ RunMCTSNE.Seurat <-
         message("\nreturning seurat object\n")
         Emb <- MCTSNE$Y
         rownames(Emb) <- rownames(GeneCellCoordinates)
-        geneEmb <- Emb[!rownames(Emb) %in% rownames(Embeddings(X, reduction)), ]
+        geneEmb <- Emb[!rownames(Emb) %in% rownames(Embeddings(X, reduction)),]
         cellEmb <- Emb[rownames(Emb) %in% rownames(Embeddings(X, reduction)), ]
         X <-
             setDimMCSlot(
@@ -192,6 +190,7 @@ RunMCTSNE.SingleCellExperiment <-
 #' @examples
 #' seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)
 #' seuratPbmc <- RunMCUMAP(seuratPbmc, dims = seq(5))
+
 RunMCUMAP <-
     function(X, reduction, dims, features, reduction.name, ...) {
         UseMethod("RunMCUMAP", X)
@@ -276,7 +275,7 @@ RunMCUMAP.SingleCellExperiment <-
 #' @param dims A vector of integers indicating which dimensions to use with reduction embeddings and loadings for distance calculation.
 #' @param features Character vector of feature names to subset feature coordinates. If not specified will take all features available from specified reduction Loadings.
 #' @importFrom stats runif
-#'
+#' 
 #' @return A matrix with gene and cell coordinates of MCA
 GetGeneCellCoordinates <- function(X, reduction, dims, features) {
     UseMethod("GetGeneCellCoordinates", X)
@@ -287,7 +286,7 @@ GetGeneCellCoordinates.Seurat <-
     function(X, reduction, dims, features) {
         message("\ngetting feature and cell coordinates\n")
         check <-
-            checkCelliDArg(X,
+            checkCellIDArg(X,
                 reduction = reduction,
                 dims = dims,
                 features = features
@@ -306,7 +305,7 @@ GetGeneCellCoordinates.SingleCellExperiment <-
     function(X, reduction, dims, features) {
         message("\ngetting feature and cell coordinates\n")
         check <-
-            checkCelliDArg(X,
+            checkCellIDArg(X,
                 reduction = reduction,
                 dims = dims,
                 features = features

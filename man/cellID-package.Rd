@@ -1,10 +1,10 @@
-\name{CelliD-package}
-\alias{CelliD-package}
-\alias{CelliD}
+\name{CellID-package}
+\alias{CellID-package}
+\alias{CellID}
 \docType{package}
 \title{Multiple Correspondence Analysis on Single Cell for Joint Dimensionality Reduction of Gene and Cell, Cells Geneset Extraction and Geneset Enrichment Analysis}
 \description{
-\packageDescription{CelliD}
+\packageDescription{CellID}
 }
 \author{
 \strong{Maintainer}: Akira Cortal \email{akira.cortal@institutimagine.org}

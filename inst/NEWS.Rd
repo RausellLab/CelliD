@@ -1,7 +1,7 @@
 \name{NEWS}
-\title{News for Package \pkg{CelliD}}
+\title{News for Package \pkg{CellID}}
 
-\section{Submission in version 0.99.0, (January 2021)}{
+\section{Submission in version 0.99, (April 2019)}{
   \itemize{
     \item{Submitted to Bioconductor}
   }

@@ -8,30 +8,30 @@
 \usage{
 GetCellGeneDistance(X, reduction, dims, features, cells)
 
-\method{GetCellGeneDistance}{Seurat}(X, reduction = "mca", dims, features = NULL, cells = NULL)
+\method{GetCellGeneDistance}{Seurat}(X, reduction = "mca", dims,
+  features = NULL, cells = NULL)
 
-\method{GetCellGeneDistance}{SingleCellExperiment}(X, reduction = "MCA", dims, features = NULL, cells = NULL)
+\method{GetCellGeneDistance}{SingleCellExperiment}(X, reduction = "MCA",
+  dims, features = NULL, cells = NULL)
 }
 \arguments{
 \item{X}{Seurat or SingleCell Experiment Object}
 
 \item{reduction}{Which dimensionality reduction to use, must be based on MCA.}
 
-\item{dims}{A vector of integers indicating which dimensions to use with
-reduction embedding and loading for distance calculation.}
+\item{dims}{A vector of integers indicating which dimensions to use with 
+reduction embeddings and loadings for distance calculation.}
 
-\item{features}{Character vector of feature names to subset
-feature coordinates. If not specified will take all features
-available from specified reduction Loading.}
+\item{features}{Character vector of feature names to subset 
+feature coordinates. If not specified will take all features available from specified reduction Loadings.}
 
-\item{cells}{Character vector of cell names to subset
-cell coordinates.
-If not specified will take all cells available from specified reduction Embedding.}
+\item{cells}{Character vector of cell names to subset cell coordinates. 
+If not specified will take all cells available from specified reduction Embeddings.}
 }
 \value{
-Distance Matrix with genes at row and cells at column
+Distance Matrix with genes at row and cellls at column
 }
 \description{
-Small intermediate function for euclidean distance calculation between
-MCA feature coordinates and cell coordinates.
+Small intermediate function for euclidean distance calculation between 
+MCA feture coordinates and cell coordinates.
 }

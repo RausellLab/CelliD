@@ -8,23 +8,12 @@
 \usage{
 GetGroupGeneSet(X, group.by, reduction, dims, features, n.features)
 
-\method{GetGroupGeneSet}{Seurat}(
-  X,
-  group.by = NULL,
-  reduction = "mca",
-  dims = seq(50),
-  features = NULL,
-  n.features = 200
-)
+\method{GetGroupGeneSet}{Seurat}(X, group.by = NULL, reduction = "mca",
+  dims = seq(50), features = NULL, n.features = 200)
 
-\method{GetGroupGeneSet}{SingleCellExperiment}(
-  X,
-  group.by = NULL,
-  reduction = "MCA",
-  dims = seq(50),
-  features = NULL,
-  n.features = 200
-)
+\method{GetGroupGeneSet}{SingleCellExperiment}(X, group.by = NULL,
+  reduction = "MCA", dims = seq(50), features = NULL,
+  n.features = 200)
 }
 \arguments{
 \item{X}{Seurat or SingleCellExperiment object, alternatively a matrix.}

@@ -39,7 +39,7 @@ GetGroupCoordinates.matrix <- function(X, group.by, reduction = NULL, dims, ...)
 GetGroupCoordinates.Seurat <-
     function(X, group.by = NULL, reduction = "mca", dims = seq(50), ...) {
         check <-
-            checkCelliDArg(
+            checkCellIDArg(
                 X,
                 reduction = reduction,
                 dims = dims,
@@ -63,7 +63,7 @@ GetGroupCoordinates.Seurat <-
 GetGroupCoordinates.SingleCellExperiment <-
     function(X, group.by = NULL, reduction = "MCA", dims, ...) {
         check <-
-            checkCelliDArg(
+            checkCellIDArg(
                 X,
                 reduction = reduction,
                 dims = dims,
@@ -106,7 +106,7 @@ GetGroupGeneDistance <-
 GetGroupGeneDistance.Seurat <-
     function(X, group.by = NULL, reduction = "mca", dims = seq(50), features = NULL) {
         check <-
-            checkCelliDArg(
+            checkCellIDArg(
                 X,
                 reduction = reduction,
                 dims = dims,
@@ -138,7 +138,7 @@ GetGroupGeneDistance.Seurat <-
 GetGroupGeneDistance.SingleCellExperiment <-
     function(X, group.by, reduction = "MCA", dims = seq(50), features = NULL) {
         check <-
-            checkCelliDArg(
+            checkCellIDArg(
                 X,
                 reduction = reduction,
                 dims = dims,
@@ -159,7 +159,7 @@ GetGroupGeneDistance.SingleCellExperiment <-
             genes_coordinates <-
                 attr(reducedDim(X, reduction), "genesCoordinates")[features, dims]
         }
-        GroupGeneDistance <- t(pairDist(genes_coordinates, group_coordinates))
+        GroupGeneDistance <-t(pairDist(genes_coordinates, group_coordinates))
         return(GroupGeneDistance)
     }
 
@@ -245,7 +245,7 @@ GetGroupGeneSet <-
 #' @rdname GetGroupGeneSet
 #' @export
 GetGroupGeneSet.Seurat <-
-    function(X, group.by = NULL, reduction = "mca", dims = seq(50), features = NULL, n.features = 200) {
+    function(X,group.by = NULL,reduction = "mca",dims = seq(50),features = NULL,n.features = 200) {
         GroupGeneRanking <-
             GetGroupGeneRanking(
                 X = X,
@@ -255,9 +255,8 @@ GetGroupGeneSet.Seurat <-
                 features = features
             )
         GroupGeneSet <-
-            lapply(GroupGeneRanking, function(x) {
-                  names(head(x, n.features))
-              })
+            lapply(GroupGeneRanking, function(x)
+                names(head(x, n.features)))
         return(GroupGeneSet)
     }
 
@@ -274,9 +273,8 @@ GetGroupGeneSet.SingleCellExperiment <-
                 features = features
             )
         GroupGeneSet <-
-            lapply(GroupGeneRanking, function(x) {
-                  names(head(x, n.features))
-              })
+            lapply(GroupGeneRanking, function(x)
+                names(head(x, n.features)))
         return(GroupGeneSet)
     }
 

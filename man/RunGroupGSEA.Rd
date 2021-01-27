@@ -6,44 +6,16 @@
 \alias{RunGroupGSEA.SingleCellExperiment}
 \title{Run GSEA on cluster/groups}
 \usage{
-RunGroupGSEA(
-  X,
-  pathways,
-  group.by,
-  reduction,
-  dims,
-  features,
-  nperm,
-  minSize,
-  maxSize,
-  gseaParam
-)
+RunGroupGSEA(X, pathways, group.by, reduction, dims, features, nperm,
+  minSize, maxSize, gseaParam)
 
-\method{RunGroupGSEA}{Seurat}(
-  X,
-  pathways,
-  group.by = NULL,
-  reduction = "mca",
-  dims = seq(50),
-  features = NULL,
-  nperm = 1000,
-  minSize = 10,
-  maxSize = 500,
-  gseaParam = 0
-)
+\method{RunGroupGSEA}{Seurat}(X, pathways, group.by = NULL,
+  reduction = "mca", dims = seq(50), features = NULL, nperm = 1000,
+  minSize = 10, maxSize = 500, gseaParam = 0)
 
-\method{RunGroupGSEA}{SingleCellExperiment}(
-  X,
-  pathways,
-  group.by,
-  reduction = "MCA",
-  dims = seq(50),
-  features = NULL,
-  nperm = 1000,
-  minSize = 10,
-  maxSize = 500,
-  gseaParam = 0
-)
+\method{RunGroupGSEA}{SingleCellExperiment}(X, pathways, group.by,
+  reduction = "MCA", dims = seq(50), features = NULL, nperm = 1000,
+  minSize = 10, maxSize = 500, gseaParam = 0)
 }
 \arguments{
 \item{X}{pathways List of gene sets to check}

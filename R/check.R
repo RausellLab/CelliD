@@ -1,4 +1,4 @@
-#' Check for CelliD arguments
+#' Check for CellID arguments
 #'
 #' @param X Seurat or SingleCell Experiment Object
 #' @param group.by Name of meta.data or ColData column.
@@ -8,12 +8,12 @@
 #' @param cells Character vector of cell names to subset cell coordinates. If not specified will take all features available from specified reduction Embeddigns.
 #'
 #' @return  list of corrected arguments if no error is thrown.
-checkCelliDArg <-
+checkCellIDArg <-
     function(X, group.by, reduction, dims, features, cells) {
-        UseMethod("checkCelliDArg", X)
+        UseMethod("checkCellIDArg", X)
     }
-#' @rdname checkCelliDArg
-checkCelliDArg.Seurat <-
+#' @rdname checkCellIDArg
+checkCellIDArg.Seurat <-
     function(X, group.by = NULL, reduction, dims, features = NULL, cells = NULL) {
         # dimension check ---------------------------------------------------------
         if (length(reduction) != 1) {
@@ -115,8 +115,8 @@ checkCelliDArg.Seurat <-
         return(fc)
     }
 
-#' @rdname checkCelliDArg
-checkCelliDArg.SingleCellExperiment <-
+#' @rdname checkCellIDArg
+checkCellIDArg.SingleCellExperiment <-
     function(X, reduction, dims, features = NULL, cells = NULL, group.by = NULL) {
         # dimension check ---------------------------------------------------------
         if (length(reduction) != 1) {

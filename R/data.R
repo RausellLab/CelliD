@@ -14,19 +14,27 @@
 #' @source \url{https://s3-us-west-2.amazonaws.com/10x.files/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz}
 "seuratPbmc"
 
+#' Biological Process GO Terms
+#'
+#' A list of gene vectors representing the different biological process as discribed in Gene Onthology.
+#' @format A list of 3857 gene onthology terms with the corresponding genes.
+#' @references The Gene Ontology project in 2008, The Gene Ontology Consortium Nucleic Acids Research, Volume 36, Issue suppl_1, January 2008, Pages D440–D444, 
+#' @source \url{http://software.broadinstitute.org/gsea/msigdb/collections.jsp#C5}
+"GO_biological"
+
 #' Mus Musculus Protein Coding Genes
 #'
-#' A gene list of mouse protein coding genes extracted from biomaRt.
+#' A gene list of mouse protein coding genes extracted from biomaRt. 
 #' @format A list of 3857 gene onthology terms with the corresponding genes.
-#' @references The Gene Ontology project in 2008, The Gene Ontology Consortium Nucleic Acids Research, Volume 36, Issue suppl_1, January 2008, Pages D440–D444,
+#' @references The Gene Ontology project in 2008, The Gene Ontology Consortium Nucleic Acids Research, Volume 36, Issue suppl_1, January 2008, Pages D440–D444, 
 #' @source \url{http://software.broadinstitute.org/gsea/msigdb/collections.jsp#C5}
 "MgProteinCodingGenes"
 
 
 #' Homo Sapiens Protein Coding Genes
 #'
-#' A gene list of human protein coding genes extracted from biomaRt.
+#' A gene list of human protein coding genes extracted from biomaRt. 
 #' @format A list of 19308 gene onthology terms with the corresponding genes.
-#' @references The Gene Ontology project in 2008, The Gene Ontology Consortium Nucleic Acids Research, Volume 36, Issue suppl_1, January 2008, Pages D440–D444,
+#' @references The Gene Ontology project in 2008, The Gene Ontology Consortium Nucleic Acids Research, Volume 36, Issue suppl_1, January 2008, Pages D440–D444, 
 #' @source \url{http://software.broadinstitute.org/gsea/msigdb/collections.jsp#C5}
 "HgProteinCodingGenes"

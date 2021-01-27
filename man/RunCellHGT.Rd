@@ -6,41 +6,16 @@
 \alias{RunCellHGT.Seurat}
 \title{Run HyperGeometric Test on cells}
 \usage{
-RunCellHGT(
-  X,
-  pathways,
-  reduction,
-  n.features,
-  features,
-  dims,
-  minSize,
-  log.trans,
-  p.adjust
-)
+RunCellHGT(X, pathways, reduction, n.features, features, dims, minSize,
+  log.trans, p.adjust)
 
-\method{RunCellHGT}{SingleCellExperiment}(
-  X,
-  pathways,
-  reduction = "MCA",
-  n.features = 200,
-  features = NULL,
-  dims = seq(50),
-  minSize = 10,
-  log.trans = TRUE,
-  p.adjust = TRUE
-)
+\method{RunCellHGT}{SingleCellExperiment}(X, pathways, reduction = "MCA",
+  n.features = 200, features = NULL, dims = 1:50, minSize = 10,
+  log.trans = T, p.adjust = T)
 
-\method{RunCellHGT}{Seurat}(
-  X,
-  pathways,
-  reduction = "mca",
-  n.features = 200,
-  features = NULL,
-  dims = seq(50),
-  minSize = 10,
-  log.trans = TRUE,
-  p.adjust = TRUE
-)
+\method{RunCellHGT}{Seurat}(X, pathways, reduction = "mca",
+  n.features = 200, features = NULL, dims = 1:50, minSize = 10,
+  log.trans = T, p.adjust = T)
 }
 \arguments{
 \item{X}{Seurat or SingleCellExperiment object with mca performed}

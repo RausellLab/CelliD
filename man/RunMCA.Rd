@@ -9,26 +9,15 @@
 \usage{
 RunMCA(X, nmcs, features, reduction.name, slot, ...)
 
-\method{RunMCA}{matrix}(X, nmcs = 50, features = NULL, reduction.name = "MCA", ...)
+\method{RunMCA}{matrix}(X, nmcs = 50, features = NULL,
+  reduction.name = "MCA", ...)
 
-\method{RunMCA}{Seurat}(
-  X,
-  nmcs = 50,
-  features = NULL,
-  reduction.name = "mca",
-  slot = "data",
-  assay = DefaultAssay(X),
-  ...
-)
+\method{RunMCA}{Seurat}(X, nmcs = 50, features = NULL,
+  reduction.name = "mca", slot = "data", assay = DefaultAssay(X),
+  ...)
 
-\method{RunMCA}{SingleCellExperiment}(
-  X,
-  nmcs = 50,
-  features = NULL,
-  reduction.name = "MCA",
-  slot = "logcounts",
-  ...
-)
+\method{RunMCA}{SingleCellExperiment}(X, nmcs = 50, features = NULL,
+  reduction.name = "MCA", slot = "logcounts", ...)
 }
 \arguments{
 \item{X}{Seurat, SingleCellExperiment or matrix object}
@@ -37,9 +26,9 @@ RunMCA(X, nmcs, features, reduction.name, slot, ...)
 
 \item{features}{character vector of feature names. If not specified all features will be taken.}
 
-\item{reduction.name}{name of the reduction default set to 'MCA' for SingleCellExperiment and mca}
+\item{reduction.name}{name of the reduction default set to "MCA" for SingleCellExperiment and mca}
 
-\item{slot}{Which slot to pull expression data from? Default to logcounts for SingleCellExperiment and data for Seurat.}
+\item{slot}{Which slot to pull expression data from?}
 
 \item{...}{other aruments passed to methods}
 

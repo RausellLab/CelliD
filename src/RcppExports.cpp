@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // fastPDist
 NumericMatrix fastPDist(NumericMatrix Ar, NumericMatrix Br);
-RcppExport SEXP _CelliD_fastPDist(SEXP ArSEXP, SEXP BrSEXP) {
+RcppExport SEXP _CellID_fastPDist(SEXP ArSEXP, SEXP BrSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -20,7 +20,7 @@ END_RCPP
 }
 // MCAStep1
 List MCAStep1(NumericMatrix X);
-RcppExport SEXP _CelliD_MCAStep1(SEXP XSEXP) {
+RcppExport SEXP _CellID_MCAStep1(SEXP XSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -31,7 +31,7 @@ END_RCPP
 }
 // MCAStep2
 List MCAStep2(NumericMatrix Z, NumericMatrix V, NumericVector Dc);
-RcppExport SEXP _CelliD_MCAStep2(SEXP ZSEXP, SEXP VSEXP, SEXP DcSEXP) {
+RcppExport SEXP _CellID_MCAStep2(SEXP ZSEXP, SEXP VSEXP, SEXP DcSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -44,13 +44,13 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_CelliD_fastPDist", (DL_FUNC) &_CelliD_fastPDist, 2},
-    {"_CelliD_MCAStep1", (DL_FUNC) &_CelliD_MCAStep1, 1},
-    {"_CelliD_MCAStep2", (DL_FUNC) &_CelliD_MCAStep2, 3},
+    {"_CellID_fastPDist", (DL_FUNC) &_CellID_fastPDist, 2},
+    {"_CellID_MCAStep1", (DL_FUNC) &_CellID_MCAStep1, 1},
+    {"_CellID_MCAStep2", (DL_FUNC) &_CellID_MCAStep2, 3},
     {NULL, NULL, 0}
 };
 
-RcppExport void R_init_CelliD(DllInfo *dll) {
+RcppExport void R_init_CellID(DllInfo *dll) {
     R_registerRoutines(dll, NULL, CallEntries, NULL, NULL);
     R_useDynamicSymbols(dll, FALSE);
 }

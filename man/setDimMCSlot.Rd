@@ -8,17 +8,11 @@
 \usage{
 setDimMCSlot(X, cellEmb, geneEmb, stdev, reduction.name, ...)
 
-\method{setDimMCSlot}{Seurat}(
-  X,
-  cellEmb,
-  geneEmb,
-  stdev = NULL,
-  reduction.name = "mca",
-  assay = DefaultAssay(X),
-  ...
-)
+\method{setDimMCSlot}{Seurat}(X, cellEmb, geneEmb, stdev = NULL,
+  reduction.name = "mca", assay = DefaultAssay(X), ...)
 
-\method{setDimMCSlot}{SingleCellExperiment}(X, cellEmb, geneEmb, stdev = NULL, reduction.name = "MCA", ...)
+\method{setDimMCSlot}{SingleCellExperiment}(X, cellEmb, geneEmb,
+  stdev = NULL, reduction.name = "MCA", ...)
 }
 \arguments{
 \item{X}{Seurat or SingleCellExperiment object}
@@ -29,7 +23,7 @@ setDimMCSlot(X, cellEmb, geneEmb, stdev, reduction.name, ...)
 
 \item{stdev}{eigen value returned by MCA}
 
-\item{reduction.name}{name of the created dimensionlaity reduction, default set to 'mca' for Seurat and 'MCA' for SCE.}
+\item{reduction.name}{name of the created dimensionlaity reduction, default set to "mca" for Seurat and "MCA" for SCE.}
 
 \item{...}{other arguments passed to methods}
 

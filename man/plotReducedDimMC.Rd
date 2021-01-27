@@ -4,16 +4,9 @@
 \alias{plotReducedDimMC}
 \title{Scater plotReducedDim for MCA like dimensionality Reduction}
 \usage{
-plotReducedDimMC(
-  X,
-  reduction = "MCA",
-  dims = c(1, 2),
-  features = NULL,
-  size.feature = 3,
-  size.feature.text = 5,
-  as.text = FALSE,
-  ...
-)
+plotReducedDimMC(X, reduction = "MCA", dims = c(1, 2),
+  features = NULL, size.feature = 3, size.feature.text = 5,
+  as.text = FALSE, ...)
 }
 \arguments{
 \item{X}{a Single Cell Experiment Object}

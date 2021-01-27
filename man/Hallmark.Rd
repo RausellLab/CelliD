@@ -4,9 +4,7 @@
 \name{Hallmark}
 \alias{Hallmark}
 \title{Hallmark Pathways from MSigDB}
-\format{
-A named list of length 50 containing Hallmark gene sets.
-}
+\format{A named list of length 50 containing Hallmark gene sets.}
 \source{
 \url{http://software.broadinstitute.org/gsea/msigdb/download_file.jsp?filePath=/resources/msigdb/6.2/h.all.v6.2.symbols.gmt}
 }
