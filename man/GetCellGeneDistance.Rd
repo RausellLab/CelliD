@@ -33,5 +33,6 @@ Distance Matrix with genes at row and cells at column
 }
 \description{
 Small intermediate function for euclidean distance calculation between
-MCA feature coordinates and cell coordinates.
+MCA feature coordinates and cell coordinates. Due to MCA pseudo barycentric relationship, 
+the closer a gene g is to a cell c, the more specific to such a cell it can be considered.
 }

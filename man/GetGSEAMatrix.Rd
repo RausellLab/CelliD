@@ -15,7 +15,7 @@ GetGSEAMatrix(X, metric = "ES")
 A matrix of geneset enrichment metric with cell/group at columns and pathways/genesets at rows
 }
 \description{
-Get Matrix from Enrichment Results
+Extract enrcihment score Matrix from RunGSEA functions.
 }
 \examples{
 seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)

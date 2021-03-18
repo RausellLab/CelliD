@@ -43,7 +43,8 @@ GetCellGeneSet(X, reduction = "mca", dims, features, cells, n.features)
 A cell named list of gene rankings ordererd by distances from shortest (most specfic) to farthest (less specific)
 }
 \description{
-Calculate cells and genes distances, rank them per cell and extract top n features
+Calculate cells and genes distances, rank them per cell and extract top n features.
+The obtained top n features represents features thatare highly specific to that cell.
 }
 \examples{
 seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)

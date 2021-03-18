@@ -43,5 +43,6 @@ checkCelliDArg(X, group.by, reduction, dims, features, cells)
 list of corrected arguments if no error is thrown.
 }
 \description{
-Check for CelliD arguments
+Performs multiple check of consistency of the argument provided by the user for different CelliD functions. 
+It notably check if the provided features or cells name ar e actually contained in the high level object.
 }

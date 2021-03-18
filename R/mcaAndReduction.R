@@ -1,7 +1,10 @@
 ##  ............................................................................
 ##  MC Dimensionality Reduction                                             ####
 
-#' Run DiffusionMap on MCA cell and feature coordinates
+#' Diffusion Map on MCA coordinates
+#' 
+#' @description (!EXPERIMENTAL) Run DiffusionMap on MCA cell and feature coordinates. 
+#' This will allow to draw the trajectory of both cells and the genes at the same time.  
 #'
 #' @param X Seurat or SingleCellExperiment object
 #' @param reduction Which dimensionality reduction to use, must be based on MCA.
@@ -82,7 +85,10 @@ RunMCDMAP.SingleCellExperiment <-
         return(X)
     }
 
-#' Run TSNE on MCA fetures and cells coordinates
+#' tSNE on MCA coordinates
+#' 
+#' @description (!EXPERIMENTAL) Run TSNE on MCA fetures and cells coordinates
+#' This will allow to embbed in 2D both cells and the genes at the same time. 
 #'
 #' @param X Seurat or SingleCellExperiment object
 #' @param reduction Which dimensionality reduction to use, must be based on MCA.
@@ -175,7 +181,10 @@ RunMCTSNE.SingleCellExperiment <-
 
 
 
-#' Run UMAP on MCA fetures and cells coordinates
+#' UMAP on MCA coordinates
+#' 
+#' @description (!EXPERIMENTAL) Run UMAP on MCA fetures and cells coordinates.
+#' This will allow to embbed in 2D both cells and the genes at the same time. 
 #'
 #' @param X Seurat or SingleCellExperiment object
 #' @param reduction Which dimensionality reduction to use, must be based on MCA.
@@ -269,7 +278,9 @@ RunMCUMAP.SingleCellExperiment <-
     }
 
 
-#' Get coordinates of both cells and features in a matrix
+#' GeneCellCoordinates
+#' 
+#' @description Get coordinates of both cells and features in a matrix
 #'
 #' @param X Seurat or SingleCellExperiment Object
 #' @param reduction Which dimensionality reduction to use, must be based on MCA.

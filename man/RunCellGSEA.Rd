@@ -75,7 +75,8 @@ RunCellGSEA(
 A data.table with geneset enrichment analysis statistics.
 }
 \description{
-Calculate cells gene specificty ranking and then perform geneset enrichment analysis on it.
+Calculate cells gene specificty ranking and then perform geneset enrichment analysis (fgsea) on it.
+However, due to the very long running time of gene set enrichment analysis, we recommend the usage of RunCellHGT.
 }
 \examples{
 seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)

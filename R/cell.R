@@ -1,7 +1,8 @@
 #' Distance Calculation
 #'
-#' Small intermediate function for euclidean distance calculation between
-#' MCA feature coordinates and cell coordinates.
+#' @description Small intermediate function for euclidean distance calculation between
+#' MCA feature coordinates and cell coordinates. Due to MCA pseudo barycentric relationship, 
+#' the closer a gene g is to a cell c, the more specific to such a cell it can be considered. 
 #'
 #' @param X Seurat or SingleCell Experiment Object
 #' @param reduction Which dimensionality reduction to use, must be based on MCA.
@@ -59,7 +60,8 @@ GetCellGeneDistance.SingleCellExperiment <- function(X, reduction = "MCA", dims,
 
 #' Ranking Extraction
 #'
-#' Intermediate function for ranking extraction from Cell Gene Distance Matrix. Genes are ordered from the most specific to the least specific to the cell.
+#' @description Intermediate function for ranking extraction from Cell Gene Distance Matrix. 
+#' Genes are ordered from the most specific to the least specific to the cell according to their euclidean distances.
 #' Value indicates the euclidean distances between the cell and the genes in the MCA coordinates.
 #'
 #' @param X Seurat or SingleCellExperiment Object
@@ -103,7 +105,8 @@ GetCellGeneRanking.SingleCellExperiment <- function(X, reduction = "MCA",
 
 #' Gene sets extraction from MCA
 #'
-#' Calculate cells and genes distances, rank them per cell and extract top n features
+#' @description Calculate cells and genes distances, rank them per cell and extract top n features.
+#' The obtained top n features represents features thatare highly specific to that cell.
 #'
 #' @param X Seurat or SingleCell Experiment Object
 #' @param reduction Which dimensionality reduction to use, must be based on MCA.
@@ -142,9 +145,9 @@ GetCellGeneSet.SingleCellExperiment <- function(X, reduction = "MCA", dims = seq
     return(geneset)
 }
 
-#' Distance Calculation with rdist
+#' Distance Calculation
 #'
-#' Small modification of rdist from fields package to include column and rownames
+#' @description Small function to calculate quickly the distance between rows of two matrix.
 #'
 #' @param x a matrix
 #' @param y a matrix

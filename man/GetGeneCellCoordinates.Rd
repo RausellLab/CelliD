@@ -2,7 +2,7 @@
 % Please edit documentation in R/mcaAndReduction.R
 \name{GetGeneCellCoordinates}
 \alias{GetGeneCellCoordinates}
-\title{Get coordinates of both cells and features in a matrix}
+\title{GeneCellCoordinates}
 \usage{
 GetGeneCellCoordinates(X, reduction, dims, features)
 }

@@ -62,10 +62,14 @@ RunCellHGT(
 \item{p.adjust}{if TRUE apply Benjamini Hochberg correctionto p-value}
 }
 \value{
-a matrix of benjamini hochberg adjusted pvalue pvalue or a sparse matrix of (-log10+1) benjamini hochberg adjusted pvalue
+a matrix of benjamini hochberg adjusted pvalue pvalue or a sparse matrix of (-log10) benjamini hochberg adjusted pvalue
 }
 \description{
-Run HyperGeometric Test on cells
+RunCellHGT calculates the gene signatures for each cells and performs hypergeometric 
+test against a user defined gene signatures/pathways (named list of genes).
+It returns a score of enrichment in the form of -log10 pvalue(see log.trans argument). 
+The obtained matrix can then be integrated in Seurat or SingleCellExperiment object.
+It can notably be used with cell type signatures to predict cell types or with functionnal pathways
 }
 \examples{
 seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)

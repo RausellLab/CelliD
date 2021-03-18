@@ -5,7 +5,7 @@
 \alias{GetGroupCoordinates.matrix}
 \alias{GetGroupCoordinates.Seurat}
 \alias{GetGroupCoordinates.SingleCellExperiment}
-\title{Centroids calculation for a given group}
+\title{Centroids Coordinates}
 \usage{
 GetGroupCoordinates(X, group.by, reduction, dims, ...)
 
@@ -30,5 +30,5 @@ GetGroupCoordinates(X, group.by, reduction, dims, ...)
 A data.table with coordinates of the group centroids for the specidied dims.
 }
 \description{
-Centroids calculation for a given group
+Centroids calculation for a given group of cells defined for instance by cell type/ condition.
 }

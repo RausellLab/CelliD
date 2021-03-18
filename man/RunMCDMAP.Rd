@@ -4,7 +4,7 @@
 \alias{RunMCDMAP}
 \alias{RunMCDMAP.Seurat}
 \alias{RunMCDMAP.SingleCellExperiment}
-\title{Run DiffusionMap on MCA cell and feature coordinates}
+\title{Diffusion Map on MCA coordinates}
 \usage{
 RunMCDMAP(X, reduction, features, dims, reduction.name, ...)
 
@@ -46,7 +46,8 @@ RunMCDMAP(X, reduction, features, dims, reduction.name, ...)
 Seurat or SingleCellExperiment object with MCDMAP stored in the reduction slot
 }
 \description{
-Run DiffusionMap on MCA cell and feature coordinates
+(!EXPERIMENTAL) Run DiffusionMap on MCA cell and feature coordinates. 
+This will allow to draw the trajectory of both cells and the genes at the same time.
 }
 \examples{
 seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)

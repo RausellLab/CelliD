@@ -1,6 +1,7 @@
 #' Run Gene Set Enrichment Analysis on cells
 #'
-#' Calculate cells gene specificty ranking and then perform geneset enrichment analysis on it.
+#' @description Calculate cells gene specificty ranking and then perform geneset enrichment analysis (fgsea) on it.
+#' However, due to the very long running time of gene set enrichment analysis, we recommend the usage of RunCellHGT.
 #'
 #' @param X Seurat or SingleCellExperiment object
 #' @param pathways List of gene sets to check
@@ -141,7 +142,7 @@ RunCellGSEA.SingleCellExperiment <-
 
 #' Run GSEA on cluster/groups
 #'
-#' Calculate group gene specificty ranking and then perform geneset enrichment analysis on it.
+#' @description Calculate group gene specificty ranking and then perform geneset enrichment analysis on it.
 #'
 #' @param X pathways List of gene sets to check
 #' @param pathways reduction Which dimensionality reduction to use, must be based on MCA.
@@ -275,6 +276,8 @@ RunGroupGSEA.SingleCellExperiment <-
 
 
 #' Get Matrix from Enrichment Results
+#' 
+#' Extract enrcihment score Matrix from RunGSEA functions.
 #'
 #' @param X an enrichment results obtained by RunGroupGSEA or RunCellGSEA
 #' @param metric a character indicating which metric to use as value of matrix (ES, NES, padj, pval)
@@ -294,33 +297,6 @@ GetGSEAMatrix <- function(X, metric = "ES") {
     return(gsea_mat)
 }
 
-#' GSEA Results Integration in Seurat object
-#'
-#' @param X a Seurat object
-#' @param gseaResults Results of GSEA obtained by RunCellGSEA or RunGroupGSEA
-#' @param assay.name The name of the new Seurat assay slot to include GSEA results
-#' @return a Seurat object with a new assay slot filled with GSE analysis resultsq
-integrateGSEASeurat <- function(X, gseaResults, assay.name) {
-    message("\n\ngenerating seurat object\n")
-    ES_matrix <-
-        GetGSEAMatrix(gseaResults, metric = "ES")
-    coln <- sort(colnames(ES_matrix))
-    rown <- sort(rownames(ES_matrix))
-    ES_matrix <- ES_matrix[rown, coln]
-    NES_matrix <-
-        GetGSEAMatrix(gseaResults, metric = "NES")
-    Scaled_NES_matrix <- t(apply(NES_matrix, 1, scale))
-    colnames(Scaled_NES_matrix) <- colnames(NES_matrix)
-    message("\nreturning seurat object\n")
-    X[[assay.name]] <-
-        CreateAssayObject(counts = Matrix::Matrix(ES_matrix, sparse = TRUE))
-    X <-
-        SetAssayData(X, slot = "data", NES_matrix, assay = assay.name)
-    X <-
-        SetAssayData(X, slot = "scale.data", Scaled_NES_matrix, assay = assay.name)
-    return(X)
-}
-
 
 # fgsea -------------------------------------------------------------------
 
@@ -328,7 +304,7 @@ integrateGSEASeurat <- function(X, gseaResults, assay.name) {
 calcGseaStatCumulativeBatch <-
     getFromNamespace("calcGseaStatCumulativeBatch", "fgsea")
 
-#' reworked fgsea for ram and speed efficiency in CelliD
+#' Slight change in fgsea for ram and speed efficiency in CelliD
 #'
 #' @param pathways List of gene sets to check
 #' @param stats Named vector of gene-level stats. Names should be the same as in 'pathways'

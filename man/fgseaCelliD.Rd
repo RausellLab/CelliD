@@ -2,7 +2,7 @@
 % Please edit documentation in R/gsea.R
 \name{fgseaCelliD}
 \alias{fgseaCelliD}
-\title{reworked fgsea for ram and speed efficiency in CelliD}
+\title{Slight change in fgsea for ram and speed efficiency in CelliD}
 \usage{
 fgseaCelliD(
   pathways,
@@ -42,7 +42,7 @@ The columns are the following:
 }
 }
 \description{
-reworked fgsea for ram and speed efficiency in CelliD
+Slight change in fgsea for ram and speed efficiency in CelliD
 }
 \examples{
 seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)

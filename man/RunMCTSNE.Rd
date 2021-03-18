@@ -4,7 +4,7 @@
 \alias{RunMCTSNE}
 \alias{RunMCTSNE.Seurat}
 \alias{RunMCTSNE.SingleCellExperiment}
-\title{Run TSNE on MCA fetures and cells coordinates}
+\title{tSNE on MCA coordinates}
 \usage{
 RunMCTSNE(X, reduction, dims, features, reduction.name, ...)
 
@@ -46,7 +46,8 @@ RunMCTSNE(X, reduction, dims, features, reduction.name, ...)
 Seurat or SingleCellExperiment object with MCTSNE stored in the reduction slot
 }
 \description{
-Run TSNE on MCA fetures and cells coordinates
+(!EXPERIMENTAL) Run TSNE on MCA fetures and cells coordinates
+This will allow to embbed in 2D both cells and the genes at the same time.
 }
 \examples{
 seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)

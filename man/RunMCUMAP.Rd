@@ -4,7 +4,7 @@
 \alias{RunMCUMAP}
 \alias{RunMCUMAP.Seurat}
 \alias{RunMCUMAP.SingleCellExperiment}
-\title{Run UMAP on MCA fetures and cells coordinates}
+\title{UMAP on MCA coordinates}
 \usage{
 RunMCUMAP(X, reduction, dims, features, reduction.name, ...)
 
@@ -46,7 +46,8 @@ RunMCUMAP(X, reduction, dims, features, reduction.name, ...)
 Seurat or SingleCellExperiment object with MCUMAP stored in the reduction slot
 }
 \description{
-Run UMAP on MCA fetures and cells coordinates
+(!EXPERIMENTAL) Run UMAP on MCA fetures and cells coordinates.
+This will allow to embbed in 2D both cells and the genes at the same time.
 }
 \examples{
 seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)

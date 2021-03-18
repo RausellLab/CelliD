@@ -2,7 +2,7 @@
 % Please edit documentation in R/cell.R
 \name{pairDist}
 \alias{pairDist}
-\title{Distance Calculation with rdist}
+\title{Distance Calculation}
 \usage{
 pairDist(x, y)
 }
@@ -15,5 +15,5 @@ pairDist(x, y)
 A Distance Matrix
 }
 \description{
-Small modification of rdist from fields package to include column and rownames
+Small function to calculate quickly the distance between rows of two matrix.
 }

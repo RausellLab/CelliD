@@ -37,6 +37,8 @@ A ggplot object
 }
 \description{
 Small modification of the Scater plotReducedDim function to enable plotting features for mca like dimensionality reduction.
+Allows to represent a set of genes of interest on top of the regular cell scatter plot. 
+The label of the genes can be iverlayed also but it is recommended to plot less than 50 genes label as it can overcrowd the plot severely.
 }
 \examples{
 scePBMC <- as.SingleCellExperiment(seuratPbmc)

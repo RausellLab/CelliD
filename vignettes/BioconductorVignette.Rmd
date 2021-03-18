@@ -23,7 +23,7 @@ antonio.rausell@institutimagine.org
 
 # Installation
 
-CelliD is based on R version >= 4.0. It contains dependencies with several CRAN and Biocondutor packages as described in the [Description file](https://github.com/cbl-imagine/CelliD/blob/master/DESCRIPTION)
+CelliD is based on R version >= 4.1. It contains dependencies with several CRAN and Biocondutor packages as described in the [Description file](https://github.com/cbl-imagine/CelliD/blob/master/DESCRIPTION)
 
 To install CelliD, set the repositories option to enable downloading Bioconductor dependencies:
 ```{r Installation, eval = FALSE}
@@ -299,15 +299,20 @@ Here we illustrate the use of Hallmark in HyperGeometric test and integrate the 
 
 ```{r, Functionnal Enrichment}
 # Downloading functional gene sets:
-# For computational reasons, we just developed here the assessment on KEGG and Hallmark MSigDB gene sets
+# For computational reasons, we just developed here the assessment on Hallmark MSigDB gene sets that is provided in the package
+# Other functionnal pathways can be obtained using the msigdbr package
 
-# KEGG <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mode=text&libraryName=KEGG_2019_Human")
-# Genesets from Reactome, WikiPathways, GO biological process, GO molecular function and GO cellular component may be obtained as follows
-# REACTOME <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mode=text&libraryName=Reactome_2016")
-# WikiPathways <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mode=text&libraryName=WikiPathways_2019_Human")
-# GOBP <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mode=text&libraryName=GO_Biological_Process_2018")
-# GOCC <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mode=text&libraryName=GO_Cellular_Component_2018")
-# GOMF <- fgsea::gmtPathways("https://amp.pharm.mssm.edu/Enrichr/geneSetLibrary?mode=text&libraryName=GO_Molecular_Function_2018")
+# library(msigdbr)
+# msigdf <- msigdbr::msigdbr(species = "Homo sapiens")
+# msigdf_filtered <- msigdf %>% select(gs_cat, gs_subcat, gs_name, gene_symbol, gs_description) %>%
+#   filter(gs_subcat == "CP:KEGG") %>%
+#   mutate(gs_subcat = ifelse(gs_subcat == "", "Hallmark", gs_subcat))
+# KEGGgenesetDF <- msigdf_filtered %>%  mutate(gs_name = str_replace(sub("^.*?_{1}", "", gs_name), "_", "\\-")) %>%
+#   group_by(gs_subcat, gs_name) %>%
+#   summarise(geneset = list(gene_symbol)) %>%
+#   group_by(gs_subcat) %>%
+#   summarise(all_geneset = list(setNames(geneset, gs_name))) 
+# KEGGgeneset <- setNames(KEGGgenesetDF$all_geneset, KEGGgenesetDF$gs_subcat)
 
 # Assessing per-cell functional enrichment analyses
 HGT_Hallmark <- RunCellHGT(Seger, pathways = Hallmark, dims = 1:50)

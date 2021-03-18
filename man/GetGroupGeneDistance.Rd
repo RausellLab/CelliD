@@ -4,7 +4,7 @@
 \alias{GetGroupGeneDistance}
 \alias{GetGroupGeneDistance.Seurat}
 \alias{GetGroupGeneDistance.SingleCellExperiment}
-\title{Distance calculation between genes and group}
+\title{Centroids-Genes distances}
 \usage{
 GetGroupGeneDistance(X, group.by, reduction, dims, features)
 
@@ -39,5 +39,5 @@ GetGroupGeneDistance(X, group.by, reduction, dims, features)
 Distance Matrix between groups (column) and genes (row)
 }
 \description{
-Distance calculation between genes and group
+Distance calculation between genes and group of cells centroids.
 }

@@ -39,7 +39,8 @@ GetCellGeneRanking(X, reduction, dims, features, cells)
 A cell named list of gene rankings ordererd by distances from shortest (most specific) to farthest (less specific)
 }
 \description{
-Intermediate function for ranking extraction from Cell Gene Distance Matrix. Genes are ordered from the most specific to the least specific to the cell.
+Intermediate function for ranking extraction from Cell Gene Distance Matrix. 
+Genes are ordered from the most specific to the least specific to the cell according to their euclidean distances.
 Value indicates the euclidean distances between the cell and the genes in the MCA coordinates.
 }
 \examples{

@@ -1,7 +1,9 @@
 ##  ............................................................................
 ##  Group Coordinates                                                       ####
 
-#' Centroids calculation for a given group
+#' Centroids Coordinates
+#' 
+#' @description Centroids calculation for a given group of cells defined for instance by cell type/ condition.
 #'
 #' @param X  Seurat or SingleCellExperiment object, alternatively a matrix.
 #' @param group.by  column name of meta.data (Seurat) or ColData (SingleCellExperiment). For Seurat object if NULL active.ident slot will be taken.
@@ -87,7 +89,9 @@ GetGroupCoordinates.SingleCellExperiment <-
 ##  ............................................................................
 ##  Group Gene Euclidean Distances                                          ####
 
-#' Distance calculation between genes and group
+#' Centroids-Genes distances
+#' 
+#' @description Distance calculation between genes and group of cells centroids.
 #'
 #' @param X  Seurat or SingleCellExperiment object, alternatively a matrix.
 #' @param group.by  column name of meta.data (Seurat) or ColData (SingleCellExperiment)

@@ -1,4 +1,7 @@
 #' Check for CelliD arguments
+#' 
+#' @description Performs multiple check of consistency of the argument provided by the user for different CelliD functions. 
+#' It notably check if the provided features or cells name ar e actually contained in the high level object.
 #'
 #' @param X Seurat or SingleCell Experiment Object
 #' @param group.by Name of meta.data or ColData column.
