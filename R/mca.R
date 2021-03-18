@@ -59,12 +59,15 @@ RunMCA.matrix <- function(X, nmcs = 50, features = NULL, reduction.name = "MCA",
 #' @param assay Name of Assay MCA is being run on
 #' @export
 RunMCA.Seurat <- function(X, nmcs = 50, features = NULL, reduction.name = "mca", slot = "data", assay = DefaultAssay(X), ...) {
+    InitAssay <- DefaultAssay(Seurat)
+    DefaultAssay(Seurat) <- assay
     data_matrix <- as.matrix(GetAssayData(X, slot))
     MCA <- RunMCA(X = data_matrix, nmcs = nmcs, features = features)
     geneEmb <- MCA$featuresCoordinates
     cellEmb <- MCA$cellsCoordinates
     stdev <- MCA$stdev
     X <- setDimMCSlot(X = X, cellEmb = cellEmb, geneEmb = geneEmb, stdev = stdev, reduction.name = reduction.name)
+    DefaultAssay(Seurat) <- InitAssay
     return(X)
 }
 
