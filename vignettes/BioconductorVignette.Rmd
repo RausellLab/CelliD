@@ -29,10 +29,7 @@ To install CelliD, set the repositories option to enable downloading Bioconducto
 ```{r Installation, eval = FALSE}
 if(!require("tidyverse")) install.packages("tidyverse")
 if(!require("ggpubr")) install.packages("ggpubr")
-if(!require("devtools")) install.packages("devtools")
-setRepositories(ind = c(1, 2, 3, 4))
-devtools::install_github("RausellLab/CelliD")
-
+BiocManager::install("CelliD")
 ```
 ## Common installation issues
 
