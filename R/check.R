@@ -59,7 +59,7 @@ checkCelliDArg.Seurat <-
                     features <- matchingFeatures
                 }
                 else {
-                    stop()
+                    stop("function aborted by user")
                 }
             }
         }
@@ -84,7 +84,7 @@ checkCelliDArg.Seurat <-
                     cells <- matchingcells
                 }
                 else {
-                    stop()
+                    stop("function aborted by user")
                 }
             }
         }
@@ -165,7 +165,7 @@ checkCelliDArg.SingleCellExperiment <-
                     features <- matchingFeatures
                 }
                 else {
-                    stop()
+                    stop("function aborted by user")
                 }
             }
         }
@@ -190,7 +190,7 @@ checkCelliDArg.SingleCellExperiment <-
                     cells <- matchingcells
                 }
                 else {
-                    stop()
+                    stop("function aborted by user")
                 }
             }
         }
