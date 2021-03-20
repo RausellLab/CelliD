@@ -9,7 +9,7 @@ Description: CelliD is a clustering-free multivariate statistical method for the
   The package can also be used to explore functional pathways enrichment in single cell data. 
 Depends:
     R (>= 4.1),
-    Seurat (>= 4.0.1),
+    Seurat (>= 4.0.0),
     SingleCellExperiment
 License: GPL-3 + file LICENSE
 Encoding: UTF-8
