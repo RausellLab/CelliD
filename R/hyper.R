@@ -22,7 +22,7 @@
 #'
 #' @examples
 #' seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)
-#' seuratPbmc <- RunCellHGT(X = seuratPbmc, pathways = Hallmark, dims = 1:5)
+#' Enrichment <- RunCellHGT(X = seuratPbmc, pathways = Hallmark, dims = 1:5)
 RunCellHGT <- function(X, pathways, reduction, n.features, features, dims, minSize, log.trans, p.adjust) {
     UseMethod("RunCellHGT", X)
 }
@@ -43,8 +43,16 @@ RunCellHGT.SingleCellExperiment <-
         TargetMatrix <- sparseMatrix(i, j, x = 1, dims = c(length(features), length(cells)), dimnames = list(features, cells))
 
         # Geneset -----------------------------------------------------------------
+        nPathInit <- length(pathways)
         pathways <- lapply(pathways, function(x) x[x %fin% features])
-        pathways <- pathways[sapply(pathways, function(x) length(x) >= minSize)]
+        pathways <- pathways[vapply(pathways, function(x) length(x) >= minSize, FUN.VALUE = logical(1))]
+        nPathEnd <- length(pathways)
+        nFiltPath <- nPathInit - nPathEnd
+        if(nPathEnd == 0){
+            stop(glue("All pathways have less than {minSize} features in common with the data"))
+        }
+        message(glue("{nPathEnd} pathways kept for hypergeometric test out of {nPathInit}, {nFiltPath} filtered as less than {minSize} features was present in the data"))
+        message("\ncalculating features overlap\n")
         message("calculating number of success\n")
         PathwayMat <- pbapply::pbsapply(pathways, function(x) which(features %fin% x), simplify = FALSE)
         PathwayLen <- unlist(lapply(PathwayMat, length))
@@ -53,8 +61,8 @@ RunCellHGT.SingleCellExperiment <-
 
         # Hypergeo ----------------------------------------------------------------
         q <- as.data.frame((t(TargetMatrix) %*% PathwayMatrix) - 1)
-        m <- sapply(pathways, function(x) sum(x %fin% features))
-        n <- sapply(m, function(x) length(features) - x)
+        m <- vapply(pathways, function(x) sum(x %fin% features), FUN.VALUE = numeric(1))
+        n <- vapply(m, function(x) length(features) - x, FUN.VALUE = numeric(1))
         k <- n.features
         message("performing hypergeometric test\n")
         A <- pbapply::pbmapply(
@@ -73,7 +81,7 @@ RunCellHGT.SingleCellExperiment <-
             A <- apply(A, 2, function(x) p.adjust(x, "BH"))
         }
         if (log.trans) {
-            A <- as.sparse(-log10(A))
+            A <- as.sparse(as.matrix(-log10(A)))
         }
         return(A)
     }
@@ -93,9 +101,16 @@ RunCellHGT.Seurat <-
         TargetMatrix <- sparseMatrix(i, j, x = 1, dims = c(length(features), length(cells)), dimnames = list(features, cells))
 
         # Geneset -----------------------------------------------------------------
+        nPathInit <- length(pathways)
         pathways <- lapply(pathways, function(x) x[x %fin% features])
-        pathways <- pathways[sapply(pathways, function(x) length(x) >= minSize)]
-        message("calculating number of success\n")
+        pathways <- pathways[vapply(pathways, function(x) length(x) >= minSize, FUN.VALUE = logical(1))]
+        nPathEnd <- length(pathways)
+        nFiltPath <- nPathInit - nPathEnd
+        if(nPathEnd == 0){
+            stop(glue("All pathways have less than {minSize} features in common with the data"))
+        }
+        message(glue("{nPathEnd} pathways kept for hypergeometric test out of {nPathInit}, {nFiltPath} filtered as less than {minSize} features was present in the data"))
+        message("\ncalculating features overlap\n")
         PathwayMat <- pbapply::pbsapply(pathways, function(x) which(features %fin% x), simplify = FALSE)
         PathwayLen <- unlist(lapply(PathwayMat, length))
         j <- rep(seq(length(PathwayMat)), times = PathwayLen)
@@ -103,8 +118,8 @@ RunCellHGT.Seurat <-
 
         # Hypergeo ----------------------------------------------------------------
         q <- as.data.frame((t(TargetMatrix) %*% PathwayMatrix) - 1)
-        m <- sapply(pathways, function(x) sum(x %fin% features))
-        n <- sapply(m, function(x) length(features) - x)
+        m <- vapply(pathways, function(x) sum(x %fin% features), FUN.VALUE = numeric(1))
+        n <- vapply(m, function(x) length(features) - x, FUN.VALUE = numeric(1))
         k <- n.features
         message("performing hypergeometric test\n")
         A <- pbapply::pbmapply(
@@ -123,7 +138,7 @@ RunCellHGT.Seurat <-
             A <- apply(A, 2, function(x) p.adjust(x, "BH"))
         }
         if (log.trans) {
-            A <- as.sparse(-log10(A))
+            A <- as.sparse(as.matrix(-log10(A)))
         }
         return(A)
     }
