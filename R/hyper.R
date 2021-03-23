@@ -14,7 +14,7 @@
 #' @param dims MCA dimensions to use to compute n.features top genes.
 #' @param minSize minimum number of overlapping genes in geneset and
 #' @param log.trans if TRUE tranform the pvalue matrix with -log10 and convert it to sparse matrix
-#' @param p.adjust if TRUE apply Benjamini Hochberg correctionto p-value
+#' @param p.adjust if TRUE apply Benjamini Hochberg correction to p-value
 #' @importFrom stats phyper
 #'
 #' @return a matrix of benjamini hochberg adjusted pvalue pvalue or a sparse matrix of (-log10) benjamini hochberg adjusted pvalue

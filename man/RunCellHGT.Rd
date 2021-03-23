@@ -59,7 +59,7 @@ RunCellHGT(
 
 \item{log.trans}{if TRUE tranform the pvalue matrix with -log10 and convert it to sparse matrix}
 
-\item{p.adjust}{if TRUE apply Benjamini Hochberg correctionto p-value}
+\item{p.adjust}{if TRUE apply Benjamini Hochberg correction to p-value}
 }
 \value{
 a matrix of benjamini hochberg adjusted pvalue pvalue or a sparse matrix of (-log10) benjamini hochberg adjusted pvalue
@@ -73,5 +73,5 @@ It can notably be used with cell type signatures to predict cell types or with f
 }
 \examples{
 seuratPbmc <- RunMCA(seuratPbmc, nmcs = 5)
-seuratPbmc <- RunCellHGT(X = seuratPbmc, pathways = Hallmark, dims = 1:5)
+Enrichment <- RunCellHGT(X = seuratPbmc, pathways = Hallmark, dims = 1:5)
 }
