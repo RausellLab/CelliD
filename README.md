@@ -16,7 +16,7 @@ CelliD is a robust statistical method that performs gene signature extraction an
 ## Installation
 
 CelliD has recently moved to [Bioconductor](https://bioconductor.org/packages/devel/bioc/html/CelliD.html) but is still in the devel branch and therefore can be installed only with R 4.1. The master branch of this repository is the mirror of the bioconductor package.
-In order to use CelliD with R version 3.5 ~ 4.0, please install the legacy branch of the repository. 
+In order to use CelliD with R version 3.6 ~ 4.0, please install the legacy branch of the repository. 
 
 Within R, set first:
 ```r
