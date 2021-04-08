@@ -55,7 +55,7 @@ CelliD: gene signature extraction and cell identity recognition at individual ce
 
 ## Companion Github repository CelliDPaperScript
 
-Upon publication of the CelliD paper, a companion Github repository with all R scripts and intermediate data representations required to reproduce all figures in the manuscript will be released. Stay tuned!
+Companion Github repository with all R scripts and intermediate data representations required to reproduce all figurescan be found here https://github.com/RausellLab/CellIDPaperScript.
 
 ## Updates 
 You may follow us in Twitter for regular updates: https://twitter.com/AntonioRausell
