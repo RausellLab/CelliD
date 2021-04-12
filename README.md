@@ -15,17 +15,17 @@ CelliD is a robust statistical method that performs gene signature extraction an
 
 ## Installation
 
-CelliD is provided as an R package (R version >= 4.0). It contains dependencies with several Bioconductor packages as described in the [Description file](https://github.com/RausellLab/CelliD/blob/master/DESCRIPTION)
+CelliD has recently moved to [Bioconductor](https://bioconductor.org/packages/devel/bioc/html/CelliD.html) but is still in the devel branch and therefore can be installed only with R 4.1. The master branch of this repository is the mirror of the bioconductor package.
+In order to use CelliD with R version 3.6 ~ 4.0, please install the legacy branch of the repository. 
 
 Within R, set first:
 ```r
 install.packages("devtools")
 setRepositories(ind = c(1,2,3))
 ```
-
 To install CelliD then just type:
 ```r
-devtools::install_github("RausellLab/CelliD")
+devtools::install_github("RausellLab/CelliD", ref = "legacy")
 ```
 ## Known installation issues
 
@@ -55,7 +55,7 @@ CelliD: gene signature extraction and cell identity recognition at individual ce
 
 ## Companion Github repository CelliDPaperScript
 
-Upon publication of the CelliD paper, a companion Github repository with all R scripts and intermediate data representations required to reproduce all figures in the manuscript will be released. Stay tuned!
+Companion Github repository with R scripts and intermediate data representations required to reproduce all figures from the Cell-ID manuscript can be found here https://github.com/RausellLab/CellIDPaperScript.
 
 ## Updates 
 You may follow us in Twitter for regular updates: https://twitter.com/AntonioRausell
