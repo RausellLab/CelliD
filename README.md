@@ -1,4 +1,4 @@
-# CelliD v0.99
+# CelliD v1.00
 R package for gene signature extraction and cell identity recognition at individual cell level from single-cell RNA-seq.
 
 <img src=tools/sticker.png height="100">
@@ -55,7 +55,7 @@ CelliD: gene signature extraction and cell identity recognition at individual ce
 
 ## Companion Github repository CelliDPaperScript
 
-Companion Github repository with all R scripts and intermediate data representations required to reproduce all figurescan be found here https://github.com/RausellLab/CellIDPaperScript.
+Companion Github repository with R scripts and intermediate data representations required to reproduce all figures from the Cell-ID manuscript can be found here https://github.com/RausellLab/CellIDPaperScript.
 
 ## Updates 
 You may follow us in Twitter for regular updates: https://twitter.com/AntonioRausell
