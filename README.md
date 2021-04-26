@@ -1,8 +1,7 @@
 # CelliD v0.99
 R package for gene signature extraction and cell identity recognition at individual cell level from single-cell RNA-seq.
 
-<img src=blob/legacy/tools/sticker.png height="100">
-
+![logo](https://github.com/RausellLab/CelliD/blob/gh-pages/tools/sticker.png?raw=true)
 ----------------------------------------
 
 Welcome to the official Github repository of the **CelliD** software presented at the BioRxiv preprint [CelliD: gene signature extraction and cell identity recognition at individual cell level. Cortal A, Martignetti L, Six E, Rausell A. BioRxiv 2020](https://www.biorxiv.org/content/10.1101/2020.07.23.215525v1)
