@@ -25,6 +25,7 @@ setRepositories(ind = c(1,2,3))
 To install CelliD then just type:
 ```r
 devtools::install_github("RausellLab/CelliD", ref = "legacy")
+library(CellID) # Note that the legacy version is called CellID and not CelliD
 ```
 ## Known installation issues
 
