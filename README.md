@@ -36,7 +36,7 @@ CelliD use as input single cell data in the form of specific S4 objects. Current
 
 ## Vignettes
 
-A vignette illustrating CelliD step-by-step procedures is provided [here](https://rauselllab.github.io/CelliD//vignettes/vign.html). Applications include MCA dimensionality reduction, per-cell gene signatures extraction, automatic cell type prediction using marker gene lists, label-transferring across datasets and functional enrichment analysis.
+A vignette illustrating CelliD step-by-step procedures is provided [here](https://bioconductor.org/packages/devel/bioc/vignettes/CelliD/inst/doc/BioconductorVignette.html). Applications include MCA dimensionality reduction, per-cell gene signatures extraction, automatic cell type prediction using marker gene lists, label-transferring across datasets and functional enrichment analysis.
 
 ## Authors
 
