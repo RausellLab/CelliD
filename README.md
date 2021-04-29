@@ -50,8 +50,7 @@ A vignette illustrating CelliD step-by-step procedures is provided [here](https:
 This project is licensed under the GNU General Public License 3 - see the [LICENSE](LICENSE) file for details
 
 ## References
-
-CelliD: gene signature extraction and cell identity recognition at individual cell level. Cortal A, Martignetti L, Six E, Rausell A. BioRxiv 2020 doi: [https://doi.org/10.1101/2020.07.23.215525](https://doi.org/10.1101/2020.07.23.215525)
+Cortal, Akira, Loredana Martignetti, Emmanuelle Six, and Antonio Rausell. “Gene Signature Extraction and Cell Identity Recognition at the Single-Cell Level with Cell-ID.” Nature Biotechnology, April 29, 2021, 1–8.[https://doi.org/10.1038/s41587-021-00896-6](https://doi.org/10.1038/s41587-021-00896-6]).
 
 ## Companion Github repository CelliDPaperScript
 
