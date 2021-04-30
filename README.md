@@ -35,6 +35,7 @@ MAC OS users might experience installation issues related to Gfortran library. T
 <details>
   <summary>Installing legacy version with R 3.5/3.6</summary>
   
+ \
   When installing CelliD from R 3.6 this error might appear.
 `ERROR: dependency 'Seurat' is not available for package 'CellID'`
 
