@@ -31,6 +31,29 @@ library(CellID) # Note that the legacy version is called CellID and not CelliD
 
 MAC OS users might experience installation issues related to Gfortran library. To solve such issue download and install the appropriate gfortran dmg file from https://github.com/fxcoudert/gfortran-for-macOS
 
+
+<details>
+  <summary>Installing legacy version with R 3.5/3.6</summary>
+  
+  When installing CelliD from R 3.6 this error might appear.
+`ERROR: dependency 'Seurat' is not available for package 'CellID'`
+
+The Seurat package on CRAN is on version 4 right now and is only usable from R version 4.X.X.
+install.packages("Seurat") will automatically try to download the version 4.
+
+It is strongly recommended to install R version 4.0 but if you need to install CelliD on R 3.6/3.5 please first install Seurat version 3
+```
+remotes::install_version("rsvd", version = "1.0.2")
+remotes::install_version("spatstat", version = "1.61.0")
+remotes::install_version("Seurat", version = "3.2.3")
+```
+And then proceed to install CelliD
+```
+setRepositories(ind = c(1,2,3))
+devtools::install_github("RausellLab/CelliD", ref = "legacy")
+```
+</details>
+
 ## Data input formats
 
 CelliD use as input single cell data in the form of specific S4 objects. Currently supported files are SingleCellExperiment from Bioconductor and Seurat Version 3 or 4 from CRAN.
