@@ -4,7 +4,7 @@ R package for gene signature extraction and cell identity recognition at individ
 ![logo](https://github.com/RausellLab/CelliD/blob/gh-pages/tools/sticker.png?raw=true)
 ----------------------------------------
 
-Welcome to the official Github repository of the **CelliD** software presented at the BioRxiv preprint [CelliD: gene signature extraction and cell identity recognition at individual cell level. Cortal A, Martignetti L, Six E, Rausell A. BioRxiv 2020](https://www.biorxiv.org/content/10.1101/2020.07.23.215525v1)
+Welcome to the official Github repository of the **CelliD** software presented in the Article [Gene signature extraction and cell identity recognition at the single-cell level with Cell-ID, Nature Biotechnology 2021](https://rdcu.be/cjFWE)
 
 ## Overview
 
@@ -27,7 +27,7 @@ To install CelliD then just type:
 devtools::install_github("RausellLab/CelliD", ref = "legacy")
 library(CellID) # Note that the legacy version is called CellID and not CelliD
 ```
-## Known installation issues
+## Known installation issues & how to solve them
 
 MAC OS users might experience installation issues related to Gfortran library. To solve such issue download and install the appropriate gfortran dmg file from https://github.com/fxcoudert/gfortran-for-macOS
 
