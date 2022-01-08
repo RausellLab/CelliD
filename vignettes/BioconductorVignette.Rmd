@@ -10,7 +10,7 @@ package: CelliD
 output:
   BiocStyle::html_document
 abstract: |
-  CelliD is a clustering-free multivariate statistical method for the robust extraction of per-cell gene signatures from single-cell RNA-seq. CelliD allows unbiased cell identity recognition across different donors, tissues-of-origin, model organisms and single-cell omics protocols. We present here the main functionalities of the CelliD R package through several use cases. This vignette illustrates the use of the CelliD R package v0.99 available at https://github.com/RausellLab/CelliD.
+  CelliD is a clustering-free multivariate statistical method for the robust extraction of per-cell gene signatures from single-cell RNA-seq. CelliD allows unbiased cell identity recognition across different donors, tissues-of-origin, model organisms and single-cell omics protocols. We present here the main functionalities of the CelliD R package through several use cases. This vignette illustrates the use of the CelliD R package.
 vignette: |
   %\VignetteIndexEntry{CelliD Vignette}
   %\VignetteEngine{knitr::rmarkdown}
@@ -319,7 +319,7 @@ HGT_Hallmark <- RunCellHGT(Seger, pathways = Hallmark, dims = 1:50)
 
 #Integrating functional annotations as an "assay" slot in the Seurat objects
 
-Seger@assays[["Hallmark"]] <- CreateAssayObject(HGT_Hallmark)
+Seger[["Hallmark"]] <- CreateAssayObject(HGT_Hallmark)
 
 # Visualizing per-cell functional enrichment annotations in a dimensionality-reduction representation of choice (e.g. MCA, PCA, tSNE, UMAP)
 ggG2Mcell <- FeaturePlot(Seger, "G2M-CHECKPOINT", order = TRUE, reduction = "tsne", min.cutoff = 2) + 
