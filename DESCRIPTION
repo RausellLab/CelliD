@@ -1,8 +1,8 @@
 Package: CelliD
 Type: Package
 Title: Unbiased Extraction of Single Cell gene signatures using Multiple Correspondence Analysis
-Version: 1.2.0
-Authors@R: c(person("Akira", "Cortal", email = "akira.cortal@institutimagine.org",
+Version: 1.2.1
+Authors@R: c(person("Akira", "Cortal", email = "akira.cortal.tech@gmail.com",
   role = c("aut", "cre")),  person("Antonio", "Rausell", role= c("aut", "ctb"), email = "antonio.rausell@institutimagine.org"))
 Description: CelliD is a clustering-free multivariate statistical method for the robust extraction of per-cell gene signatures from single-cell RNA-seq. 
   CelliD allows unbiased cell identity recognition across different donors, tissues-of-origin, model organisms and single-cell omics protocols. 
