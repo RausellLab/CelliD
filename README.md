@@ -1,4 +1,4 @@
-# CelliD v0.99
+# CelliD v1.21
 R package for gene signature extraction and cell identity recognition at individual cell level from single-cell RNA-seq.
 
 ![logo](https://github.com/RausellLab/CelliD/blob/gh-pages/tools/sticker.png?raw=true)
