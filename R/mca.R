@@ -1,17 +1,17 @@
 #' Run Multiple Correspondence Analysis
-#' 
-#' @description RunMCA allows to compute the Multiple Corespondence Analysis on the single cell data contained in Seurat or SingleCellExperiment. 
-#' MCA is a statistical technique close to PCA that provides a simultaneous 
+#'
+#' @description RunMCA allows to compute the Multiple Corespondence Analysis on the single cell data contained in Seurat or SingleCellExperiment.
+#' MCA is a statistical technique close to PCA that provides a simultaneous
 #' representation of observations (e.g. cells) and variables (e.g. genes) in low-dimensional space.
-#' The barycentric relation among cells and genes is a distinctive feature of MCA biplots 
-#' and represents a major advantage as compared to other types of biplots such as those produced by Principal Component Analysis 
-#' as well as over alternative low-dimensional transformations providing only cell projections. 
-#' Thus, in the MCA biplot, analytical distances can be calculated not only between cells and between genes, 
-#' but also between each cell and each gene in order to estimate its association. 
-#' Thus, the closer a gene g is to a cell c, the more specific to such a cell it can be considered. 
-#' Gene-to-cell distances can then be ranked for each individual cell, 
+#' The barycentric relation among cells and genes is a distinctive feature of MCA biplots
+#' and represents a major advantage as compared to other types of biplots such as those produced by Principal Component Analysis
+#' as well as over alternative low-dimensional transformations providing only cell projections.
+#' Thus, in the MCA biplot, analytical distances can be calculated not only between cells and between genes,
+#' but also between each cell and each gene in order to estimate its association.
+#' Thus, the closer a gene g is to a cell c, the more specific to such a cell it can be considered.
+#' Gene-to-cell distances can then be ranked for each individual cell,
 #' and the top-ranked genes may be regarded as a unique gene signature representing the identity card of the cell.
-#' 
+#'
 #'
 #' @param X Seurat, SingleCellExperiment or matrix object
 #' @param nmcs number of components to compute and store, default set to 30
@@ -74,7 +74,7 @@ RunMCA.matrix <- function(X, nmcs = 50, features = NULL, reduction.name = "MCA",
 RunMCA.Seurat <- function(X, nmcs = 50, features = NULL, reduction.name = "mca", slot = "data", assay = DefaultAssay(X), ...) {
     InitAssay <- DefaultAssay(X)
     DefaultAssay(X) <- assay
-    data_matrix <- as.matrix(GetAssayData(X, slot))
+    data_matrix <- as.matrix(GetAssayData(X, slot = slot))
     MCA <- RunMCA(X = data_matrix, nmcs = nmcs, features = features)
     geneEmb <- MCA$featuresCoordinates
     cellEmb <- MCA$cellsCoordinates
